@@ -2,6 +2,7 @@
   "description": "site vue",
   "version": "0.1.1",
   "author": " Freekazoid",
+  "email": "web-26@ya.ru",
   "license": "MIT",
   "private": true,
   "main": "server.js",

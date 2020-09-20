@@ -2,7 +2,8 @@
   "name": "web-26.ml",
   "version": "0.2.0",
   "private": true,
-  "author": " Freekazoid",
+  "author": "Freekazoid",
+  "email": "web-26@ya.ru",
   "license": "MIT",
   "scripts": {
     "serve": "vue-cli-service serve",
