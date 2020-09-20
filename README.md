@@ -1,4 +1,4 @@
-# radio.loc
+# Radio ICE
 
 ## Project setup
 ```

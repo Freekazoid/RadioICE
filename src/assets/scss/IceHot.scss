@@ -1,0 +1,275 @@
+.IceHot{
+  width: calc(100% - 60px);
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-evenly;
+  padding: 0 0 130px 0;
+  
+  .widget{
+    padding: 0;
+  }
+
+  .title{
+    display: flex;
+    justify-content: space-between;
+    margin: 60px 0 40px;
+    width: 100%;
+    height: 90px;
+
+    .a{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      hr{
+        width: 30px;
+        height: 3px;
+        margin-right: 10px;
+        background: #2FC3FE;
+        border: none;
+      }
+      h1{
+        font-family: 'Raleway-SemiBold';
+        font-style: normal;
+        font-weight: 600;
+        font-size: 18px;
+        line-height: 150%;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: #2FC3FE;
+      }
+    }
+    
+    .b{
+      width: calc(100% - 280px);
+      height: 90px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      
+      .arrow{
+        color: #2FC3FE;
+        font-weight: 600;
+        font-size: 30px;
+        line-height: 4px;
+        margin-left: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: baseline;
+      }
+      h1{
+        font-family: 'Raleway-Light';
+        font-style: normal;
+        font-weight: 600;
+        font-size: 12px;
+        line-height: 150%;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: #2FC3FE;
+      }
+      .rectangle{
+        width: 100%;
+        height: 90px;
+        max-width: 650px;
+        background: #C4C4C4;
+
+        .swiper{
+          .swiper-wrapper{
+            .boxBanner{
+              width: 100% !important;
+              height: 90px;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              .images{
+                position: absolute;
+                img{
+                  width: 100%;
+                }
+              }
+              .textslide{
+                position: absolute;
+                z-index: 1;
+                right: 44px;
+                bottom: 18px;
+                background: aliceblue;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .icehot{
+    max-width: 940px;
+
+    .newItemsTrack{
+      width: 100%;
+      height: 60px;
+      background: #E3E2E2;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 5px 0;
+      
+      &-data{
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+
+        .number{
+          min-width: 40px;
+          min-height: 60px;
+          background: #1B1B1B;
+          font-family: 'Raleway-Bold';
+          font-style: normal;
+          font-weight: bold;
+          font-size: 24px;
+          text-transform: uppercase;
+          color: #FFFFFF;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+        .playTrack{
+          background: #2FC3FE;
+        }
+        .rating{
+          width: 40px;
+          height: 100%;
+          display: flex;
+          font-family: 'Raleway-Light';
+          font-style: normal;
+          font-weight: 300;
+          font-size: 12px;
+          color: #000000;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+        }
+        .ratingUp::before{
+          content: '';
+          width: 0;
+          height: 0;
+          position: relative;
+          border: 8px solid transparent;
+          border-bottom: 8px solid #3CA422;
+        }
+        .ratingDovn::after{
+          content: '';
+          width: 0;
+          height: 0;
+          position: relative;
+          border: 8px solid transparent;
+          border-top: 8px solid #A42222;
+        }
+        span{
+          margin: 3px 0;
+        }
+        .imgTrack{
+          width: 48px;
+          height: 48px;
+          display: flex;
+          justify-content: center;
+          align-items: center; 
+          cursor: pointer;
+
+          svg{
+            position: absolute;
+          }
+        }
+        .name-track{
+          width: 350px;
+          display: flex;
+          flex-flow: row wrap;
+          justify-content: flex-start;
+          align-items: center;
+          padding: 0 20px;
+
+          .author{
+            font-family: 'Raleway-Bold';
+            font-style: normal;
+            font-weight: bold;
+            font-size: 14px;
+            letter-spacing: 0.1em;
+            color: #000000;
+          }
+          .delimiters{
+            margin: 0 5px;
+          }
+          .track{
+            font-family: 'Raleway-Light';
+            font-style: normal;
+            font-weight: normal;
+            font-size: 12px;
+            letter-spacing: 0.1em;
+            color: #000000;
+          }
+        }
+      }
+
+      &-info{
+        width: 150px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 30px 0 0;
+
+        .timeRating{
+          font-family: 'Raleway-Light';
+          font-style: normal;
+          font-weight: 300;
+          font-size: 12px;
+          letter-spacing: 0.1em;
+          color: #000000;
+        }
+        .youTubeLinck{
+          width: 70px;
+          height: 30px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          overflow: hidden;
+        }
+      }
+    }
+  }
+}
+@media (max-width: 1130px) { 
+  .IceHot{
+    justify-content: center;
+    width: calc(100% - 40px);
+    height: 100%;
+    min-height: calc(100vh - 359px);
+  }
+}
+@media (max-width: 800px) {
+  .IceHot{
+    padding: 0 0 70px 0;
+    .title{
+      margin: 0;
+      .b{
+        display: none;
+      }
+    }
+    .icehot{
+      width: 100%;
+      .newItemsTrack{
+        &-data{
+          .name-track{
+            width: auto;
+            flex-direction: column;
+            align-items: flex-start;
+            .delimiters{
+              display: none;    
+            }
+          }
+        }
+        &-info{
+          display: none;
+        }
+      }
+    }
+  }
+}

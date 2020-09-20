@@ -1,0 +1,19 @@
+.widget{
+  display: flex;
+  width: 300px;
+  height: 840px;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 157px 0 0 0;
+  margin: 0 0 0 10px;
+
+  .images{
+    margin: 0 0 30px 0;
+  }
+}
+@media (max-width: 1100px) {
+  .widget{
+    display: none;
+  }
+}

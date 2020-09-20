@@ -1,2 +1,14 @@
 User-agent: *
-Disallow:
+Disallow: 
+Crawl-delay: 5
+Disallow: /.idea/
+Disallow: /cgi-bin/
+Disallow: /css/
+Disallow: /js/
+Disallow: /fonts/
+Disallow: /img/
+Disallow: /logs/
+
+Sitemap: http://web-26.ml/sitemap.xml
+Host: http://web-26.ml/
+

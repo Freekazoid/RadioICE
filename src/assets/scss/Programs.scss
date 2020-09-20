@@ -1,0 +1,290 @@
+.programs{
+  width: calc(100% - 60px);
+
+  .title{
+    display: flex;
+    justify-content: space-between;
+    margin: 60px 0 40px;
+    width: 100%;
+    height: 90px;
+
+    .a{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+
+      hr{
+        width: 30px;
+        height: 3px;
+        margin-right: 10px;
+        background: #2FC3FE;
+        border: none;
+      }
+      h1{
+        font-family: 'Raleway-SemiBold';
+        font-style: normal;
+        font-weight: 600;
+        font-size: 18px;
+        line-height: 150%;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: #2FC3FE;
+      }
+    }
+    
+  }
+  .wrapper{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    justify-content: center;
+    padding: 0 0 100px 0;
+
+    .content {
+      width: 100%;
+      height: 100%;
+      font-family: 'Raleway-Medium';
+      font-style: normal;
+      font-weight: normal;
+      font-size: 14px;
+      line-height: 150%;
+      letter-spacing: 0.1em;
+      color: #000000;
+      padding: 0 0 130px 0;
+      display: flex;
+      
+      .images {
+        width: auto;
+        height: auto;
+        position: relative;
+        overflow: hidden;
+        float: left;
+        margin: 0 20px 20px 0;
+
+        .airsMobile{
+          display: none;
+        }
+      }
+      .boxInfo{
+        width: 100%;
+        min-height: 100%;
+        display: flex;
+        flex-flow: row wrap;
+
+        .hosts{
+          font-family: 'Raleway-Bold';
+          font-size: 12px;
+          line-height: 150%;
+          letter-spacing: 0.1em;
+          color: #000000;
+
+          .host{
+            font-family: 'Raleway-Medium';
+          }
+        }
+        .title {
+          height: 30px;
+          width: 100%;
+          font-family: 'Raleway-Medium';
+          font-style: normal;
+          font-weight: 600;
+          font-size: 18px;
+          line-height: 150%;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+          color: #2fc3fe;
+          margin: 0 0 14px 0;
+        }
+        .airs{
+          font-family: 'Raleway-Bold';
+          font-style: normal;
+          font-weight: bold;
+          font-size: 12px;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+          color: #2FC3FE;
+
+          .air{
+            font-family: 'Raleway-Medium';
+            font-style: normal;
+            font-weight: 300;
+            font-size: 12px;
+            letter-spacing: 0.1em;
+            color: #000000;
+            text-transform: none;
+          }
+        }
+      }
+    }
+    .programInfoHover{
+      border-radius: 30%;
+      background: aliceblue;
+    }
+    .programInfo{
+      display: block;
+      width: 344px;
+      height: 270px;
+      position: relative;
+      margin: 20px 30px 40px 0;
+
+      .images{
+        width: 140px;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        position: relative;
+
+        &>img{
+          max-width: none;
+          min-width: auto;
+          min-height: auto;
+          height: 100%;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+        }
+      }
+
+      .infoApp{
+        position: absolute;
+        width: 200px;
+        height: 220px;
+        background: #FFFFFF;
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 4px 4px 4px rgba(0, 0, 0, 0.25);
+        top: 30px;
+        right: 0;
+        padding: 15px 11px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        cursor: pointer;
+
+        h1{
+          font-family: 'Raleway-Bold';
+          font-weight: bold;
+          font-size: 14px;
+          letter-spacing: 0.1em;
+          color: #2FC3FE;
+        }
+
+        .hosts{
+          font-family: 'Raleway-Bold';
+          font-size: 12px;
+          line-height: 150%;
+          letter-spacing: 0.1em;
+          color: #000000;
+
+          .host{
+            font-family: 'Raleway-Medium';
+          }
+        }
+
+        .airs{
+          font-family: 'Raleway-Medium';
+          font-style: normal;
+          font-weight: bold;
+          font-size: 12px;
+          line-height: 150%;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+          color: #2FC3FE;
+
+          .air{
+            font-weight: 300;
+            text-transform: none;
+            color: #000000;
+          }
+        }
+
+      }
+    }
+  }
+}
+@media (max-width: 1130px) {
+  .programs{
+    justify-content: center;
+    width: calc(100% - 40px);
+    height: 100%;
+    min-height: calc(100vh - 359px);
+  }
+}
+@media (max-width: 800px) {
+  .programs{
+    .title{
+      margin: 0;
+    }
+    .wrapper{
+      padding: 0 0 30px 0;
+      .content{
+        flex-direction: column;
+        .images{
+          width: 100%;
+          margin: 0;
+          .airsMobile{
+            display: block;
+            position: absolute;
+            z-index: 1;
+            bottom: 0;
+            width: calc(100% - 19px);
+            min-height: 40px;
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0) -58%, #000000 82.98%);
+            font-family: Raleway-Medium;
+            font-style: normal;
+            font-weight: 600;
+            font-size: 12px;
+            line-height: 150%;
+            text-align: right;
+            letter-spacing: 0.1em;
+            color: #2FC3FE;
+            padding: 6px 10px 10px;
+          }
+        }
+        .boxInfo{
+          flex-flow: column wrap;
+          .title{
+            height: 30px;
+          }
+          .hosts{
+            margin: 0 0 10px 0;
+          }
+          .airs{
+            margin: 10px 0 0 0; 
+          }
+        }
+
+      }
+      .programInfo{
+        width: 330px;
+        height: 326px;
+        margin: 0 0 40px 30px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+
+        .images{
+          width: 100%;
+          height: 215px;
+        }
+        .infoApp{
+          position: inherit;
+          width: calc(100% - 92px);
+          height: 80px;
+          top: 0;
+          min-width: 250px;
+          min-height: 80px;
+
+          .airs{
+            display: none;
+          }
+        }
+      }
+    }
+  }
+}

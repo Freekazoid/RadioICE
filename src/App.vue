@@ -1,32 +1,48 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
-  </div>
+  <div id="root" :is="UIDescktop"></div>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script>
+import {mapActions, mapGetters, mapMutations} from 'vuex'
 
-#nav {
-  padding: 30px;
+import Client from '@/views/Client.vue'
+import Admin from '@/views/Admin.vue'
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
+export default {
+  components: {
+    Client, Admin
+  },
+  data() {
+    return {
+      changeTitleTimer: 0,
 
-    &.router-link-exact-active {
-      color: #42b983;
     }
-  }
+  },
+  computed: {
+    ...mapGetters({
+      GET_LOGGED: 'GET_LOGGED',
+    }),
+    UIDescktop(){
+      return (this.$route.name === 'Admin' && this.GET_LOGGED) ? 'Admin' : 'Client'
+    }
+  },
+  methods: {
+    ...mapActions({
+      //loader: 'preLoader/loader',
+    }),
+    ...mapMutations({
+      SET_LOGGED: 'SET_LOGGED',
+    }),
+    changeTitle(){
+      var letter = document.title[0]
+      document.title = document.title.substr(1) + letter
+      this.changeTitleTimer = setTimeout(this.changeTitle, 800)
+    },
+  },
+  created() {
+    setTimeout(this.changeTitle(), 4000)
+  },
 }
-</style>
+</script>
+
+<style lang="scss"></style>
