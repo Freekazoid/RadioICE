@@ -23,7 +23,7 @@
 					<path d="M14.2934 3.95626C14.1103 3.7732 13.8135 3.7732 13.6305 3.95626C13.4474 4.13932 13.4474 4.4361 13.6305 4.61916C15.5262 6.51493 15.5262 9.48497 13.6305 11.3807C13.4474 11.5638 13.4474 11.8606 13.6305 12.0436C13.8135 12.2267 14.1103 12.2267 14.2934 12.0436C16.5675 9.7695 16.5699 6.23281 14.2934 3.95626Z" fill="#2FC3FE"/>
 				</svg>
 
-				<label for=""><input ref="volume" type="range" name="volume" min="0" max="1" step="0.1" @change="setValumFunc" /></label>
+				<label for=""><input ref="volume" v-model="volume" type="range" name="volume" min="0" max="1" step="0.1" @change="setValumFunc" /></label>
 			</div>
 			<div class="activeLessonUser">
 				<svg width="22" height="14" viewBox="0 0 22 14" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -39,7 +39,7 @@
 	import {mapActions, mapGetters, mapMutations} from 'vuex'
 	import GetImages from '@/components/getImages.vue'
 	import VueAudio from '@/components/audio.vue'
-	import * as constant from '@/constant.js'
+	
 
 	export default {
 		components: {
@@ -49,9 +49,9 @@
 		data() {
 			return {
 				online: {},
-				list: { source: 'http://onair.radioice.ru:8000/mp3_128' },//http://onair.radioice.ru:8000/mp3_192
-				mode: constant.SINGLE,
-				volume: constant.VOLUME,
+				list: { source: 'http://onair.radioice.ru:8000/mp3_128' },
+				mode: '',
+				volume: 0,
 				setValum: 0,  
 				svgOptions: {
 					width: 40,
@@ -69,7 +69,7 @@
 		},
 		methods: {
 			setValumFunc(e) {
-				this.setValum = e.target.value;
+				this.setValum = Number(e.target.value);
 			},
 			timeupdate(e) {
 				let target = e.target;
@@ -77,47 +77,23 @@
 				let duration = target.duration;
 				let percent = ((100 / duration) * currentTime).toFixed(1);
 				if (isNaN(percent) || percent === '0.0')
-					percent = 0;
-                
-				// let svg = target.parentNode.querySelector('svg');
-				// if (percent > 100) {
-				// 	percent = 100;
-				// }
-				// let centerX = this.svgOptions.width / 2;
-				// let centerY = this.svgOptions.height / 2;
-				// let radius = centerX - this.svgOptions.strokeWidth / 2;
-				// let startX = centerX;
-				// let startY = centerY - radius;
-				// let xAxisRotation = 0;
-				// let sweepFlag = 1;
-				// let circ = Math.PI * 2;
-				// let largeArcFlag = 0;
-				// if ((percent * circ) / 100 >= Math.PI) {
-				// 	largeArcFlag = 1;
-                // }
-                
-				// let endX = centerX + radius * Math.sin((circ * percent) / 100);
-				// let endY = centerY - radius * Math.cos((circ * percent) / 100);
-				// let d = 'M' +startX +',' +startY +' ' +'A' +radius +',' +radius +' ' +xAxisRotation +' ' +largeArcFlag +' ' +sweepFlag +' ' +endX +',' +endY;
-				// let path = svg.querySelector('path');
-                // path.setAttribute('d', d);
-                
+					percent = 0
 			},
 			playing(e) {
 				let ele = e.path ? e.path[1] : e.target.parentElement;
-				ele.querySelector('a').className = constant.PLAY_CLASS;
+				ele.querySelector('a').className = process.env.VUE_APP_PLAY_CLASS;
 			},
 			pause(e) {
 				let ele = e.path ? e.path[1] : e.target.parentElement;
-				ele.querySelector('a').className = constant.PAUSE_CLASS;
+				ele.querySelector('a').className = process.env.VUE_APP_PAUSE_CLASS;
 			},
 			ended(e) {
 				let ele = e.path ? e.path[1] : e.target.parentElement;
-				ele.querySelector('a').className = constant.PAUSE_CLASS;
+				ele.querySelector('a').className = process.env.VUE_APP_PAUSE_CLASS;
 			},
 			waiting(e) {
 				let ele = e.path ? e.path[1] : e.target.parentElement;
-				ele.querySelector('a').className = constant.LOAD_CLASS;
+				ele.querySelector('a').className = process.env.VUE_APP_LOAD_CLASS;
 			},
 			error(e) {
 				console.log(e);
@@ -132,11 +108,12 @@
 			},
 		},
 		mounted() {
-			this.$refs.volume.value = this.volume
-			console.log( process.env )
+			//this.$refs.volume.value = Number(this.volume)
 		},
 		created() {
-    this.online = this.streamLive
+			this.online = this.streamLive
+			this.mode = String(process.env.VUE_APP_SINGLE)
+			this.volume = Number(process.env.VUE_APP_VOLUME)
   },
 	};
 </script>

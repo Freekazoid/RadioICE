@@ -67,7 +67,7 @@ const colorC = {
       tableDB.stream = (typeof tableDB.stream !== 'object')? new Object : tableDB.stream
 
       if(JSON.stringify(tableDB.stream.streamLive) !== JSON.stringify(data)){
-        console.log( data )
+        //console.log( data )
 
         tableDB.stream.streamLive = data
         usersRespons(tableDB, 'response')

@@ -42,7 +42,7 @@ export default new Vuex.Store({
         },
       },
       mutations:{
-        SOCKET_test(state, from) {/////////////////////////////////////
+        SOCKET_test(state, from) {
           console.log( state.data, from )
         },
         SOCKET_response(state, from) {

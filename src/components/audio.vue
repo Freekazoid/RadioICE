@@ -1,8 +1,7 @@
 <template lang="html">
 	<div class="vue-audio-container" @click.stop.prevent="startPlay">
 		<slot></slot>
-		<audio
-			class="audio"
+		<audio class="audio"
 			:muted="muted"
 			:autoplay="autoplay"
 			:preload="preload"
@@ -19,7 +18,6 @@
 </template>
 
 <script>
-	import * as constant from '@/constant.js';
 	let currentTarget;
 	export default {
 		data() {
@@ -37,8 +35,8 @@
 				},
 			},
 			mode: {
-				type: Number,
-				default: constant.SINGLE,
+				type: String,
+				default: false,
 			},
 			index: {
 				type: Number,
@@ -61,21 +59,21 @@
 				default: false,
 			},
 			volume: {
-				//type: String,
+				type: Number,
 				default: false,
 			},
 		},
 		watch: {
 			volume(newVal) {
 				let speaker = document.querySelector('.speaker');
-
+//console.log('this volume', newVal)
 				if (Number(newVal) <= 0.6 && Number(newVal) >= 0.4) {
 					speaker.lastChild.style.fill = 'transparent';
 				}
 				if (Number(newVal) > 0.5) {
 					speaker.lastChild.style.fill = '#2FC3FE';
 				}
-				if (Number(newVal) <= 0.4 && Number(newVal) >= 0.2) {
+				if (Number(newVal) <= 0.4 && Number(newVal) >= 0.3) {
 					let count = speaker.childNodes.length;
 					for (let i = 0; i < count; i++) {
 						if (i + 1 === count - 1)
@@ -108,11 +106,10 @@
 			},
 		},
 		mounted() {
-			this.$nextTick(function() {
+			this.$nextTick(() => {
 				this.audios = document.querySelector('audio');
 			});
 		},
-		computed: {},
 		methods: {
 			startPlay(e) {
 				let target = e.currentTarget;
@@ -146,7 +143,7 @@
 			},
 			_modeControl() {
 				// single mode
-				if (this.mode === constant.SINGLE) {
+				if (this.mode === process.env.VUE_APP_SINGLE) {
 					return;
 				}
 			},
