@@ -1,4 +1,9 @@
 # Radio ICE
+## Server ip
+46.161.48.157
+
+## Server addres
+http://46.161.48.157/
 
 ## Project setup
 ```
