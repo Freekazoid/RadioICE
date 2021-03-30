@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<ELEM_LIST>
+    <ELEM PLAYER_NAME="ГЏГ«ГҐГҐГ°" STATUS="playing">
+        <START_TIME>03:24:58</START_TIME
+        ><BLK_TYPE>М</BLK_TYPE>
+        <TYPE>М</TYPE>
+        <NAME>Test</NAME>
+        <ARTIST>Test 1</ARTIST>
+        <AUTHOR>Adam Levine, Shellback, Max Martin</AUTHOR>
+        <ALBUM>2012 A&amp;M Octone</ALBUM>
+        <DBID>3525</DBID>
+        <FILE_NAME>D:\Radio ICE\ROOT\SND\Music\Maroon 5 - One More Night.mp3</FILE_NAME>
+        <DURATION>00:03:37</DURATION>
+    </ELEM>
+    <LISTNER>212</LISTNER>
+</ELEM_LIST>
+
+
