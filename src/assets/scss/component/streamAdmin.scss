@@ -1,0 +1,254 @@
+.liveAdmin{
+    width: 100%;
+    height: 100%;
+  
+    fieldset {
+      border: 1.5px solid #CCA383;
+      width: 320px;
+      padding: 0 4px 4px 4px;
+  
+      &>input{
+        width: 97%;
+      }
+    }
+  
+    .tytle{
+      color: tan;
+      font-size: 30px;
+      font-family: Tahoma;
+      text-transform: capitalize;
+      padding: 0 0 20px;
+      user-select: none;
+    }
+    .list{
+      min-width: 300px;
+      max-width: 100%;
+      width: 100%;
+      display: flex;
+      flex-flow: row wrap;
+      width: 100%;
+      justify-content: space-around;
+  
+      &>.option{
+        width: 450px;
+        margin: 0 0px 20px 20px;
+        display: flex;
+        align-items: baseline;
+        justify-content: flex-start;
+        padding: 0 10px 0 10px;
+
+        &>.sett{
+          width: 100%;
+          display: flex;
+          justify-content: space-between;
+          position: relative;
+          align-items: center;
+          flex-flow: wrap row;
+
+          input{
+            border: 0.5px solid;
+            background: transparent;
+          }
+
+          .searchRes{
+            display: none;
+            position: absolute;
+            right: 0;
+            background: #fd0707c2;
+            width: 176px;
+            height: 34px;
+            padding: 0 4px;
+            overflow: hidden;
+            justify-content: center;
+            align-items: center;
+            border-radius: 5px;
+          }
+          .find{
+            position: absolute;
+            right: 0;
+            padding: 0 3px 0 0;
+          }
+        }
+  
+        .select{
+          width: 86px;
+          text-align: center;
+          margin: 0 0 0 10px;
+          border: 0.5px solid;
+          background: transparent;
+        }
+      }
+      .pajesNumb{
+        display: flex;
+        width: 100%;
+        height: auto;
+        justify-content: center;
+        align-items: flex-start;
+        flex-wrap: wrap;
+  
+        .boxNot{
+          width: 100%;
+          text-align: center;
+          color: darkred;
+          font-weight: bolder;
+        }
+        .listStream:hover{
+          background: lightcoral;
+        }
+        .listStream{
+          min-width: 24px;
+          min-height: 24px;
+          max-width: 24px;
+          max-height: 24px;
+          border: 0.5px solid #000;
+          background: lightgoldenrodyellow;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          cursor: pointer;
+          border-radius: 50%;
+          margin: 0 10px 10px 0;
+          span{
+            width: 100%;
+            height: 100%;
+          }
+        }
+        .window{
+          display: none;
+        }
+        .active {
+          background: lightblue;
+        }
+      }
+      .dataItemList{
+        width: 100%;
+        display: flex;
+        flex-flow: row wrap;
+        margin: 20px 0 0 0;
+        justify-content: space-evenly;
+        align-items: flex-start;
+  
+        .listOne{
+          width: 320px;
+          border-radius: 10px;
+          border-left: 1px solid #000;
+          border-right: 1px solid #000;
+          margin: 0 10px 30px 0;
+          display: flex;
+          justify-content: flex-start;
+          align-items: center;
+          flex-direction: column;
+          
+          .saveHide{
+            display: none;
+          }
+          .save{
+            background: forestgreen;
+            width: 100%;
+            height: 32px;
+            color: aliceblue;
+            font-size: 16px;
+            font-family: Tahoma;
+            border: none;
+            box-shadow: 0 0 5px black;
+            cursor: pointer;
+            border-radius: 0 0 11px 13px;
+            margin: 0 0 10px 0;
+          }
+          .save:disabled { 
+            color: darkslategray;
+            background: silver;
+           }
+          &>.box{
+            width: 94%;
+            min-height: 80px;
+
+            .img{
+              width: 100px;
+              height: 100px;
+            }
+            &>.audio{
+              width: 300px;
+              height: 70px;
+            }
+            &>.video{
+              width: 300px;
+              height: 150px;
+            }
+            &>.clear{
+              font-weight: bold;
+              z-index: 2;
+              cursor: pointer;
+              border: 1px solid;
+              padding: 3px 5px;
+              border-radius: 5px;
+            }
+          }
+          label{
+            width: 94%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-flow: wrap row;
+          }
+          .label{
+            justify-content: space-evenly;
+          }
+          .listPlay{
+            max-width: 190px;
+            max-height: 20px;
+            overflow: hidden;
+  
+            &>ul>li{
+              cursor: initial;
+            }
+          }
+          .listPlay:hover{
+            max-height: 40px;
+            overflow: auto;
+          }
+          input{
+            border: 0.5px solid #000;
+            margin: 0 0 2px 0;
+          }
+          &>.number{
+            width: 100%;
+            display: flex;
+            justify-content: space-evenly;
+            /////////////////////////////
+            &>.num{
+              width: 50%;
+              &>input{
+                border: none;
+              }          
+              &>input[type="number"]{
+                width: inherit;
+              }
+            }
+            &>.delet{
+              width: 70px;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+  
+              .del{
+                width: 24px;
+                height: 24px;
+                background: brown;
+                color: chartreuse;
+                border-radius: 50%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin: 0;
+                cursor: pointer;
+              }
+            }
+          }
+        }
+      }
+      .window{
+        display: none;
+      }
+    }
+  }

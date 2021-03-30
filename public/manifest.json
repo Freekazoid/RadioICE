@@ -1,0 +1,62 @@
+{
+  "name": "Radio ICE - Радио модных и стильных! ",
+  "short_name": "Radio ICE",
+  "start_url": "index.html",
+  "scope": "/",
+  "display": "minimal-ui",
+	"theme_color": "#000",
+  "background_color": "#000",
+  "description": "Radio ICE - Радио модных и стильных! Некоммерческое, экологически чистое радио для отдыха и хорошего настроения создано командой профессионалов своего дела! Никакой рекламы и официальной информации! Только музыка и позитив! Мы не попадаем ни под один известный музыкальный формат. Мы оригинальны. В нашем эфире звучит всё лучшее от золотых до современных хитов!",
+  "icons": [{
+    "src": "img/icons/favicon_48х48.png",
+    "sizes": "48x48",
+    "type": "image/png"
+  }, {
+    "src": "img/icons/favicon_72х72.png",
+    "sizes": "72x72",
+    "type": "image/png"
+  }, {
+    "src": "img/icons/favicon_96х96.png",
+    "sizes": "96x96",
+    "type": "image/png"
+  }, {
+    "src": "img/icons/msapplication-icon-144x144.png",
+    "sizes": "144x144",
+    "type": "image/png"
+  }, {
+    "src": "img/icons/favicon_168х168.png",
+    "sizes": "168x168",
+    "type": "image/png"
+  }, {
+    "src": "img/icons/android-chrome-192x192.png",
+    "sizes": "192x192",
+    "type": "image/png"
+  },
+	{
+		"src": "./img/icons/android-chrome-192x192.png",
+		"sizes": "192x192",
+		"type": "image/png"
+	},
+	{
+		"src": "./img/icons/android-chrome-512x512.png",
+		"sizes": "512x512",
+		"type": "image/png"
+	},
+	{
+		"src": "./img/icons/android-chrome-maskable-192x192.png",
+		"sizes": "192x192",
+		"type": "image/png",
+		"purpose": "maskable"
+	},
+	{
+		"src": "./img/icons/android-chrome-maskable-512x512.png",
+		"sizes": "512x512",
+		"type": "image/png",
+		"purpose": "maskable"
+	}
+	],
+  "related_applications": [{
+    "platform": "play",
+    "url": "https://play.google.com/store/apps/details?id=cheeaun.hackerweb"
+  }]
+}

@@ -1,0 +1,119 @@
+.LifeAdmin{
+    width: 100%;
+    height: 100%;
+    
+    input{
+      border: 0.1px solid;
+    }
+    button{
+      cursor: pointer;
+    }
+    .tytle{
+      color: tan;
+      font-size: 30px;
+      font-family: Tahoma;
+      text-transform: capitalize;
+      padding: 0 0 20px;
+      user-select: none;
+    }
+    .news{
+      width: calc(100% - 20px);
+      padding: 4px 10px;
+      border-top: 2px solid;
+      border-bottom: 2px solid;
+      border-radius: 10px;
+      margin: 0 0 12px;
+      justify-content: space-around;
+      display: flex;
+      flex-direction: column;
+  
+      &>.box{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+  
+        &>label{
+          &>.del{
+            width: 24px;
+            height: 24px;
+            background: brown;
+            color: chartreuse;
+            border-radius: 50%;
+            margin: 0;
+            cursor: pointer;
+          }
+        }
+  
+        &>.info{
+          display: flex;
+          flex-direction: column;
+          width: 260px;
+          align-items: flex-end;
+  
+          /////////////////////////////
+          .num{
+            width: 70px;
+            &>input{
+              border: none;
+              max-width: 40px;
+            }
+          }
+          /////////////////////////////
+        }
+      }
+      &>.content{
+        width: 100%;
+        display: flex;
+        height: 170px;
+        flex-direction: column;
+      }
+  
+    }
+  
+    .boxCategory{
+      display: flex;
+      width: calc(100% - 20px);
+      justify-content: space-between;
+      flex-flow: wrap row;
+      padding: 12px 10px;
+      
+      .titleNews{
+        height: 130px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        margin: 0 0 10px 0;
+        border-radius: 5px;
+        border-top: 1px solid black;
+        border-bottom: 1px solid black;
+        padding: 4px;
+        align-items: flex-end;
+        /////////////////////////////
+        .num{
+          width: 70px;
+          &>input{
+            border: none;
+            max-width: 40px;
+          }
+        }
+        /////////////////////////////
+        &>label{
+          &>.del{
+            width: 24px;
+            height: 24px;
+            background: brown;
+            color: chartreuse;
+            border-radius: 50%;
+            margin: 0;
+            cursor: pointer;
+          }
+        }
+  
+        fieldset {
+          border: 1.5px solid #CCA383;
+          padding: 0 4px 4px 4px;
+  
+        }
+      }
+    }
+  }

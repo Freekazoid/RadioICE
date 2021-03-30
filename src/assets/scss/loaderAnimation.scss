@@ -1,0 +1,47 @@
+$spinkit-size: 4em !default;
+$spinkit-spinner-color: #ffffff !default;
+
+.sk-wave {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none; 
+
+  background: #171717;
+  
+  $rectCount: 5;
+  $animationDuration: 1.2s;
+  $delayRange: 0.4s;
+  
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-content: center;
+
+  width: 40px;
+  height: 10px;
+  margin: auto;
+
+  .sk-rect {
+    background-color: $spinkit-spinner-color;
+    height: 100%;
+    width: calc(100% / 10);
+    display: inline-block;
+    animation: sk-wave-stretch-delay $animationDuration infinite ease-in-out;
+  }
+
+  @for $i from 1 through $rectCount {
+    .sk-rect-#{$i} { animation-delay: - $animationDuration + $delayRange / ($rectCount - 1) * ($i - 1); }
+  }
+}
+
+@keyframes sk-wave-stretch-delay {
+  0%, 40%, 100% {
+    transform: scaleY(0.4);
+  }
+  20% {
+    transform: scaleY(1.0);
+  }
+}

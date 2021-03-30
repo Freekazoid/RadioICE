@@ -1,0 +1,1 @@
+//exports.GET_COPYRIGHT = require("./copyright.js");

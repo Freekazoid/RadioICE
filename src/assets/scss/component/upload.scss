@@ -1,0 +1,31 @@
+.contentBox{
+    max-width: 100px;
+    min-width: 70px;
+  
+    .upload{
+      width: 30px;
+      height: 30px;
+      position: absolute;
+      fill: white;
+      background: black;
+      border-radius: 20px;
+      z-index: 1;
+    }
+    
+    &>.box, &>.preBox{
+      cursor: pointer;
+  
+      &>img{
+        width: 100%
+      }
+    }
+    &>.preBox{
+      display: flex;
+      .label{
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        justify-content: center;
+      }
+    }
+  }

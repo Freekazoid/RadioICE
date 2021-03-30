@@ -1,0 +1,430 @@
+.playList{
+  width: calc(100% - 60px);
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-evenly;
+  
+  .widget{
+    padding: 0;
+  }
+
+  .title{
+    display: flex;
+    justify-content: space-between;
+    margin: 60px 0 40px;
+    width: 100%;
+    height: 90px;
+
+    .a{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      hr{
+        width: 30px;
+        height: 3px;
+        margin-right: 10px;
+        background: #2FC3FE;
+        border: none;
+      }
+      h1{
+        font-family: 'Raleway-SemiBold';
+        font-style: normal;
+        font-weight: 600;
+        font-size: 18px;
+        line-height: 150%;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: #2FC3FE;
+      }
+    }
+    
+    .b{
+      width: calc(100% - 280px);
+      height: 90px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      
+      .arrow{
+        color: #2FC3FE;
+        font-weight: 600;
+        font-size: 30px;
+        line-height: 4px;
+        margin-left: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: baseline;
+      }
+      h1{
+        font-family: 'Raleway-Light';
+        font-style: normal;
+        font-weight: 600;
+        font-size: 12px;
+        line-height: 150%;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: #2FC3FE;
+      }
+      .rectangle{
+        width: 100%;
+        height: 90px;
+        max-width: 650px;
+        background: #C4C4C4;
+
+        .swiper{
+          .swiper-wrapper{
+            .boxBanner{
+              width: 100% !important;
+              height: 90px;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              .images{
+                position: absolute;
+                img{
+                  width: 100%;
+                }
+              }
+              .textslide{
+                position: absolute;
+                z-index: 1;
+                right: 44px;
+                bottom: 18px;
+                background: aliceblue;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  .filter{
+    width: 100%;
+    height: 40px;
+    display: flex;
+    justify-content: right;
+    align-items: center;
+
+    select{
+      width: 128px;
+      height: 30px;
+      background: #E3E2E2;
+      border-radius: 4px;
+      font-family: 'Raleway-Medium';
+      font-style: normal;
+      font-weight: normal;
+      font-size: 14px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #000000;
+      padding: 6px 15px 5px 9px;
+      margin: 0 10px;
+      cursor: pointer;
+    }
+    input{
+      width: 122px;
+      height: 16px;
+      background: #E3E2E2;
+      border-radius: 4px;
+      font-family: 'Raleway-Medium';
+      font-weight: normal;
+      font-size: 14px;
+      font-style: normal;
+      text-transform: uppercase;
+      color: #000000;
+      padding: 5px 10px 5px 10px;
+      margin: 0 10px;
+      cursor: pointer;
+    }
+    .setTime{
+      width: 248px;
+
+      input{
+        width: 68px;
+        cursor: pointer;
+      }
+    }
+    .show{
+      width: 130px;
+      max-width: 130px;
+      height: 30px;
+      background: #2FC3FE;
+      border-radius: 4px;
+      border: none;
+      font-family: Raleway-Medium;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 14px;
+      line-height: 150%;
+      text-transform: capitalize;
+      color: #FFFFFF;
+      cursor: pointer;
+    }
+  }
+  
+  .List{
+    width: 100%;
+    max-width: 960px;
+    min-width: 919px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    
+
+    .listRadio{
+      width: 950.2px;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      padding: 50px 0 130px 0;
+      
+      .itemTrack{
+        width: 50%;
+        height: 54px;
+        display: flex;
+        flex-wrap: inherit;
+        align-items: center;
+        position: relative;
+        flex-direction: row-reverse;
+        justify-content: flex-start;
+        
+        .youTubeLinck{
+          width: 70px;
+          height: 30px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          overflow: hidden;
+        }
+        .img{
+          position: absolute;
+          z-index: 1;
+        }
+        .delimeterTrackList{
+          width: 80px;
+          height: 54px;
+          background-size: cover;
+          position: absolute;
+          right: -40px;
+          margin: 0 auto;
+        }
+        .delimeterTrackListMobile{
+          display: none;
+        }
+        .timeTrack{
+          width: 31px;
+          height: 21px;
+          font-family: 'Raleway-Medium';
+          font-style: normal;
+          font-weight: normal;
+          font-size: 12px;
+          text-transform: uppercase;
+          color: #000000;
+          margin: 0 30px 0 0;
+          display: flex;
+          align-items: center;
+        }
+        .right{
+          margin: 0 0 0 30px;
+        }
+        .imgTrack{
+          width: 48px;
+          height: 48px;
+          position: relative;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          margin: 0 10px 0;
+          cursor: pointer;
+
+          .images{
+            width: 48px;
+            height: 48px;
+          }
+        }
+        .soundTrackL{
+          max-width: 50%;
+          display: flex;
+          flex-flow: row;
+          margin: 0 10px 0 0;
+
+          .author{
+            font-family: 'Raleway-Bold';
+            font-style: normal;
+            font-weight: bold;
+            font-size: 14px;
+            letter-spacing: 0.1em;
+            color: #000000;
+          }
+          .delimiters{
+            margin: 0 5px; 
+          }
+          .track{
+            font-family: 'Raleway-Medium';
+            font-style: normal;
+            font-weight: normal;
+            font-size: 14px;
+            letter-spacing: 0.1em;
+            color: #000000;
+          }
+        }
+        .soundTrackR{
+          display: flex;
+          flex-flow: row-reverse;
+          margin: 0 0  0 10px;
+          max-width: 50%;
+
+          .author{
+            font-family: 'Raleway-Bold';
+            font-style: normal;
+            font-weight: bold;
+            font-size: 14px;
+            letter-spacing: 0.1em;
+            color: #000000;
+          }
+          .delimiters{
+            margin: 0 5px; 
+          }
+          .track{
+            font-family: 'Raleway-Medium';
+            font-style: normal;
+            font-weight: normal;
+            font-size: 14px;
+            letter-spacing: 0.1em;
+            color: #000000;
+          }
+        }
+      }
+      /*
+      .left{
+        flex-direction: row-reverse;
+        justify-content: flex-end;
+      }
+      */
+      .right{
+        flex-direction: row;
+        justify-content: flex-start;
+        margin-top: 54px;
+
+        .delimeterTrackList{
+          left: -40px;
+          margin: 0;
+        }
+      }
+    }
+  } 
+}
+@media (min-width: 900px) and (max-width: 1350px) { 
+  .playList{
+    .widget{
+      display: none;
+    }
+  }
+}
+@media (max-width: 1130px) {
+  .playList{
+    justify-content: center;
+    width: calc(100% - 40px);
+    min-height: calc(100vh - 359px);
+    
+    .List{
+      .listRadio {
+        width: 100%;
+      }
+    } 
+  }
+}
+@media (max-width: 919px) {
+  .playList{
+    .title{
+      margin: 0;
+      .b{
+        display: none;
+      }
+    }
+    .filter{
+      height: 100px;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      align-items: baseline;
+      .setTime{
+        input{
+          margin: 0 2px;
+        }
+      }
+    }
+    .List{
+      width: 100%;
+      min-width: 400px;
+      .listRadio{
+        padding: 0 0 70px 0;
+        .itemTrack{
+          position: inherit;
+          justify-content: flex-start;
+          flex-direction: row;
+          width: 100%;
+          max-width: 100%;
+          overflow: hidden;
+          margin: 0;
+
+          .timeTrack{
+            margin: 0 0 0 10px;
+          }
+          &>.delimeterTrackList{
+            display: none;
+          }
+          &>.delimeterTrackListMobile{
+            display: block;
+            width: 29px;
+            height: 54px;
+            background-size: cover;
+            margin: 0 0 0 18px;
+          }
+          .youTubeLinck{
+            order: 1;
+          }
+          .soundTrackL{
+            flex-direction: column;
+            .delimiters{
+              display: none;
+            }
+            .track{
+              white-space: nowrap;
+              overflow: hidden;
+              padding: 5px;
+              text-overflow: ellipsis;
+            }
+          }
+          .soundTrackR{
+            flex-direction: column;
+            .delimiters{
+              display: none;
+            }
+            .track{
+              white-space: nowrap;
+              overflow: hidden;
+              padding: 5px;
+              text-overflow: ellipsis;
+            }
+          }
+
+        }
+      }
+    }
+  }
+}
+@media (max-width: 600px) {
+  .playList{
+    .List{
+      .listRadio{
+        .itemTrack{
+          .youTubeLinck{
+            display: none;
+          }
+        }
+      }
+    }
+  }
+}

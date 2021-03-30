@@ -1,0 +1,7 @@
+exports.GET_NEW_ITEM = require("./newItems.js")
+exports.GET_SWIPER_HEAD = require("./swiperHead.js")
+exports.GET_SWIPER_HEAD_OP = require("./swiperHeadOp.js")
+exports.GET_SWIPER_NEW_ITEM = require("./swiperNewItems.js")
+exports.GET_SWIPER_NEW_ITEM_OP = require("./swiperNewItemsOp.js")
+exports.GET_SWIPER_NEW_VIDEO = require("./swiperNewVideo.js")
+exports.GET_SWIPER_NEW_VIDEO_OP = require("./swiperNewVideoOp.js")

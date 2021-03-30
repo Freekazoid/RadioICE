@@ -1,0 +1,77 @@
+.headerAdmin{
+    width: 100%;
+    height: 100%;
+  
+    .tytle{
+      color: tan;
+      font-size: 30px;
+      font-family: Tahoma;
+      text-transform: capitalize;
+      padding: 0 0 20px;
+      user-select: none;
+    }
+    fieldset {
+      border: 1.5px solid #CCA383;
+      width: 320px;
+      padding: 0 4px 4px 4px;
+  
+      .box{
+        display: flex;
+        justify-content: space-around;
+        flex-direction: column;
+      }
+      .preBox{
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+  
+        .label{
+          width: 100px;
+          height: 70px;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+        }
+        .preImages{
+          width: 90px;
+          height: 110px;
+        }
+      }
+      .linckItem{
+        width: 100%;
+        margin: 0 0 16px 0;
+  
+        /////////////////////////////
+        .num{
+          width: 70px;
+          &>input{
+            border: none;
+            max-width: 40px;
+          }
+        }
+        /////////////////////////////
+  
+        .subItem{
+          margin: 5px 0 0 40px;
+  
+          &>input{
+            width: 98%;
+          }
+          &>input[type="checkbox"]{
+            width: 20px;
+          }
+        }
+  
+        &>input{
+          width: 98%;
+        }
+        &>input[type="checkbox"]{
+          width: 20px;
+        }
+  
+      }
+    }
+  
+  }
