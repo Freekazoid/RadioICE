@@ -120,7 +120,7 @@
         </div>
       </div> -->
     </fieldset>
-
+<!-- 
     <fieldset>
       <legend>Слайдр страницы ice-hot:</legend>
       <div class="newBoxItem options">
@@ -359,7 +359,8 @@
           <label>Удалить слайд: <button class="del" type="button" title="Delete this video" @click.prevent="Delete(index, 'Video')">X</button></label>
         </div>
       </div>
-    </fieldset>
+    </fieldset> -->
+  
   </div>
 </template>
 
@@ -377,20 +378,20 @@ export default {
       swiperHead: [],
       swiperNewItems: [],
       swiperNewVideo: [],
-      swiperIceHot: [],
-      swiperNewItem: [],
-      swiperTeam: [],
-      swiperPlayList: [],
-      swiperVideo: [],
+      // swiperIceHot: [],
+      // swiperNewItem: [],
+      // swiperTeam: [],
+      // swiperPlayList: [],
+      // swiperVideo: [],
 
       swiperHeadOp: {},
       swiperNewItemsOp: {},
       swiperNewVideoOp: {},
-      swiperIceHotOp: {},
-      swiperNewItemOp: {},
-      swiperTeamOp: {},
-      swiperPlayListOp: {},
-      swiperVideoOp: {},
+      // swiperIceHotOp: {},
+      // swiperNewItemOp: {},
+      // swiperTeamOp: {},
+      // swiperPlayListOp: {},
+      // swiperVideoOp: {},
       
       swiperHeadCr:{
         id: 0,
@@ -490,7 +491,7 @@ export default {
       //loader: 'preLoader/loader',
     }),
     ...mapMutations({
-      SET_MENU_ADMIN: 'Admin/SET_MENU_ADMIN',
+      SET_RADIO_SLIDER: 'Admin/SET_RADIO_SLIDER',
     }),
     bubbleSort(arr){
       for (let i = 0, endI = arr.length - 1; i < endI; i++) {
@@ -521,73 +522,90 @@ export default {
     },
   },
   watch: {
-    GET_SWIPER_HEAD(newD, lastD){
-      this.swiperHead = newD
+    // GET_SWIPER_HEAD(newD, lastD){
+    //   this.swiperHead = newD
+    // },
+    // GET_SWIPER_HEAD_OP(newD, lastD){
+    //   this.swiperHeadOp = newD
+    // },
+    swiperHead: {
+      handler(newD, lastD) {
+        this.SET_RADIO_SLIDER({swiperHead: newD})
+      },
+      deep: true
     },
-    GET_SWIPER_HEAD_OP(newD, lastD){
-      this.swiperHeadOp = newD
+    swiperHeadOp: {
+      handler(newD, lastD) {
+        this.SET_RADIO_SLIDER({swiperHeadOp: newD})
+      },
+      deep: true
     },
-    GET_SWIPER_NEW_ITEM(newD, lastD){
-      this.swiperNewItems = newD
-    },
-    GET_SWIPER_NEW_ITEM_OP(newD, lastD){
-      this.swiperNewItemsOp = newD
-    },
-    GET_SWIPER_NEW_VIDEO(newD, lastD){
-      this.swiperNewVideo = newD
-    },
-    GET_SWIPER_NEW_VIDEO_OP(newD, lastD){
-      this.swiperNewVideoOp = newD
-    },
-    GET_SWIPER_IH(newD, lastD){
-      this.swiperIceHot = newD
-    },
-    GET_SWIPER_IH_OP(newD, lastD){
-      this.swiperIceHotOp = newD
-    },
-    GET_SWIPER_NI(newD, lastD){
-      this.swiperNewItem = newD
-    },
-    GET_SWIPER_NI_OP(newD, lastD){
-      this.swiperNewItemOp = newD
-    },
-    GET_SWIPER_T(newD, lastD){
-      this.swiperTeam = newD
-    },
-    GET_SWIPER_T_OP(newD, lastD){
-      this.swiperTeamOp = newD
-    },
-    GET_SWIPER_PL(newD, lastD){
-      this.swiperPlayList = newD
-    },
-    GET_SWIPER_PL_OP(newD, lastD){
-      this.swiperPlayListOp = newD
-    },
-    GET_SWIPER_V(newD, lastD){
-      this.swiperVideo = newD
-    },
-    GET_SWIPER_V_OP(newD, lastD){
-      this.swiperVideoOp = newD
-    },
+
+
+
+    // GET_SWIPER_NEW_ITEM(newD, lastD){
+    //   this.swiperNewItems = newD
+    // },
+    // GET_SWIPER_NEW_ITEM_OP(newD, lastD){
+    //   this.swiperNewItemsOp = newD
+    // },
+    // GET_SWIPER_NEW_VIDEO(newD, lastD){
+    //   this.swiperNewVideo = newD
+    // },
+    // GET_SWIPER_NEW_VIDEO_OP(newD, lastD){
+    //   this.swiperNewVideoOp = newD
+    // },
+    // GET_SWIPER_IH(newD, lastD){
+    //   this.swiperIceHot = newD
+    // },
+    // GET_SWIPER_IH_OP(newD, lastD){
+    //   this.swiperIceHotOp = newD
+    // },
+    // GET_SWIPER_NI(newD, lastD){
+    //   this.swiperNewItem = newD
+    // },
+    // GET_SWIPER_NI_OP(newD, lastD){
+    //   this.swiperNewItemOp = newD
+    // },
+    // GET_SWIPER_T(newD, lastD){
+    //   this.swiperTeam = newD
+    // },
+    // GET_SWIPER_T_OP(newD, lastD){
+    //   this.swiperTeamOp = newD
+    // },
+    // GET_SWIPER_PL(newD, lastD){
+    //   this.swiperPlayList = newD
+    // },
+    // GET_SWIPER_PL_OP(newD, lastD){
+    //   this.swiperPlayListOp = newD
+    // },
+    // GET_SWIPER_V(newD, lastD){
+    //   this.swiperVideo = newD
+    // },
+    // GET_SWIPER_V_OP(newD, lastD){
+    //   this.swiperVideoOp = newD
+    // },
   },
   created() {
+    console.log(this.swiperHead)
     this.swiperHead = this.GET_SWIPER_HEAD
     this.swiperNewItems = this.GET_SWIPER_NEW_ITEM
     this.swiperNewVideo = this.GET_SWIPER_NEW_VIDEO
-    this.swiperIceHot = this.GET_SWIPER_IH
-    this.swiperNewItem = this.GET_SWIPER_NI
-    this.swiperTeam = this.GET_SWIPER_T
-    this.swiperPlayList = this.GET_SWIPER_PL
-    this.swiperVideo = this.GET_SWIPER_V
+    console.log(this.swiperHead)
+    // this.swiperIceHot = this.GET_SWIPER_IH
+    // this.swiperNewItem = this.GET_SWIPER_NI
+    // this.swiperTeam = this.GET_SWIPER_T
+    // this.swiperPlayList = this.GET_SWIPER_PL
+    // this.swiperVideo = this.GET_SWIPER_V
 
     this.swiperHeadOp = this.GET_SWIPER_HEAD_OP
     this.swiperNewItemsOp = this.GET_SWIPER_NEW_ITEM_OP
     this.swiperNewVideoOp = this.GET_SWIPER_NEW_VIDEO_OP
-    this.swiperIceHotOp = this.GET_SWIPER_IH_OP
-    this.swiperNewItemOp = this.GET_SWIPER_NI_OP
-    this.swiperTeamOp = this.GET_SWIPER_T_OP
-    this.swiperPlayListOp = this.GET_SWIPER_PL_OP
-    this.swiperVideoOp = this.GET_SWIPER_V_OP
+    // this.swiperIceHotOp = this.GET_SWIPER_IH_OP
+    // this.swiperNewItemOp = this.GET_SWIPER_NI_OP
+    // this.swiperTeamOp = this.GET_SWIPER_T_OP
+    // this.swiperPlayListOp = this.GET_SWIPER_PL_OP
+    // this.swiperVideoOp = this.GET_SWIPER_V_OP
   },
 }
 </script>

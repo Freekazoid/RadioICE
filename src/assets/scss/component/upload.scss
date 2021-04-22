@@ -21,11 +21,15 @@
     }
     &>.preBox{
       display: flex;
+      position: relative;
+
       .label{
         display: flex;
         flex-direction: column;
         align-items: stretch;
         justify-content: center;
+        position: absolute;
+        right: 0;
       }
     }
   }

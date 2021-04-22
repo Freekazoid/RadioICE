@@ -19,11 +19,12 @@
 <script>
 import {mapActions, mapGetters, mapMutations} from 'vuex'
 
-import GetImages from '@/components/getImages.vue'
+// import GetImages from '@/components/getImages.vue'
+// import upload from '@/components/upload.vue'
 
 export default {
   components: {
-    GetImages,
+    // GetImages, upload,
   },
   data() {
     return {
@@ -41,7 +42,8 @@ export default {
   },
   watch: {
     password(newD, lastD){
-      this.reChangePassword(newD)
+      if(newD !== this.GET_PASSWORD)
+        this.admin = true
     },
   },
   methods: {
@@ -51,16 +53,12 @@ export default {
     ...mapMutations({
       SET_PASSWORD: 'Admin/SET_PASSWORD',
     }),
-    reChangePassword(newPass){
-      if(newPass !== this.GET_PASSWORD)
-        this.admin = true
-    },
     baseSetPassword(evt){
       evt.target.focus()
       if(evt.target.value === this.passwordBase){
         this.comment = 'пароль сменен'
         this.comClass = false
-        this.SET_PASSWORD(this.password)
+        this.SET_PASSWORD({password: this.password})
       } else {
         this.password = this.GET_PASSWORD
         this.comClass = true

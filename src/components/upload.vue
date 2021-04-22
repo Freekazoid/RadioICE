@@ -43,8 +43,8 @@ export default {
   },
   computed: {
     dataConvert(){
-      //console.log(this.findImg.indexOf('base64'))
-      return this.findImg.indexOf('base64') + 1? `data:image/png;${this.findImg}` : `${this.findSrc}${this.findImg}`
+      // console.log( !this.findImg.indexOf('base64') )
+      return !this.findImg.indexOf('base64')? this.findImg : `${this.findSrc}${this.findImg}`
     },
     findSrc(){
       return (typeof this.src !== 'string'? '' : this.src)

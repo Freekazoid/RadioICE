@@ -36,7 +36,7 @@ footer{
     .socIco{
       display: flex;
       justify-content: space-between;
-      width: 120px;
+      min-width: 120px;
     }
     .socApp{
       width: 100%;

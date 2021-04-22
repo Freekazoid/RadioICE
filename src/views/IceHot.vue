@@ -132,7 +132,8 @@ export default {
     }),
     maxIceHost(arr){
       let tmp = []
-      arr.forEach((item, i) => i<process.env.VUE_APP_MAX_30_ICEHOT?tmp.push(item):null)
+      if(arr.length > 0)
+        arr.forEach((item, i) => i<process.env.VUE_APP_MAX_30_ICEHOT?tmp.push(item):null)
       return tmp
     },
     filter(a, b){

@@ -39,7 +39,17 @@
         width: 100%;
         display: flex;
         flex-flow: wrap row;
-        justify-content: space-evenly;
+        justify-content: space-between;
+        flex-direction: row;
+        align-items: stretch;
+        position: relative;
+
+        &>.newBoxItem{
+          position: absolute;
+          display: block;
+          top: -20px;
+          right: 0;
+        }
   
         &>.item{
           width: 270px;
@@ -70,7 +80,7 @@
         display: flex;
         flex-flow: wrap column;
         width: 670px;
-        margin: 0 auto;
+        // margin: 0 auto;
   
         &>.option{
           display: flex;

@@ -5,11 +5,11 @@
 				<div class="player">
 					<div class="imgTrack">
 						<div :class="statick+' play'"></div>
-						<GetImages :img="online.img" class="img" />
+						<GetImages :img="imgRander" class="img" />
 					</div>
 					<div class="nameTrack">
-						<div class="author">{{ online.artist }}</div>
-						<div class="track">{{ online.name }}</div>
+						<div class="author">{{ artistRander }}</div>
+						<div class="track">{{ nameRander }}</div>
 					</div>
 				</div>
 			</VueAudio>
@@ -57,8 +57,18 @@
 		},
 		computed: {
 			...mapGetters({
-      streamLive: 'stream/GET_STREAM_LIVE',
-			})
+      			GET_STREAM_LIVE: 'stream/GET_STREAM_LIVE',
+			}),
+			imgRander(){
+				// console.log( this.GET_STREAM_LIVE )
+				return this.online.hasOwnProperty('img')?this.online.img:'/img/iceRadioLogo.svg'
+			},
+			artistRander(){
+				return this.online.hasOwnProperty('artist')?this.online.artist:'no artist'
+			},
+			nameRander(){
+				return this.online.hasOwnProperty('name')?this.online.name:'no name'
+			},
 		},
 		methods: {
 			cleaVolume(){
@@ -116,7 +126,7 @@
 			},
 		},
 		watch: {
-			streamLive: {
+			GET_STREAM_LIVE: {
 				handler(newD, lastD) {
 					this.online = newD
 				},
@@ -126,7 +136,7 @@
 		mounted() {
 		},
 		created() {
-			this.online = this.streamLive
+			this.online = Object.keys(this.GET_STREAM_LIVE).length > 0? this.GET_STREAM_LIVE:{}
 			this.mode = Number(process.env.VUE_APP_SINGLE)
 			this.volume = parseFloat(process.env.VUE_APP_VOLUME)
 			window.addEventListener('keyup', this.volumecontrol, false)

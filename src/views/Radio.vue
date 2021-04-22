@@ -273,27 +273,27 @@ export default {
   },
   watch: {
     GET_NEW_ITEM(newD, lastD){
-      if(JSON.stringify(this.newItems) !== JSON.stringify(newD))
+      if(JSON.stringify(newD) !== JSON.stringify(lastD))
         this.newItems = newD.slice(0, 10)
     },
     GET_SWIPER_HEAD(newD, lastD){
-      if(JSON.stringify(this.swiperHead) !== JSON.stringify(newD))
+      if(JSON.stringify(newD) !== JSON.stringify(lastD))
         this.swiperHead = newD
     },
     GET_SWIPER_HEAD_OP(newD, lastD){
-      if(JSON.stringify(this.swiperHeadOp) !== JSON.stringify(newD))
+      if(JSON.stringify(newD) !== JSON.stringify(lastD))
         this.swiperHeadOp = newD
     },
     GET_SWIPER_NEW_ITEM(newD, lastD){
-      if(JSON.stringify(this.swiperNewItems) !== JSON.stringify(newD))
+      if(JSON.stringify(newD) !== JSON.stringify(lastD))
         this.swiperNewItems = newD
     },
     GET_SWIPER_NEW_ITEM_OPм(newD, lastD){
-      if(JSON.stringify(this.swiperNewItemsOp) !== JSON.stringify(newD))
+      if(JSON.stringify(newD) !== JSON.stringify(lastD))
         this.swiperNewItemsOp = newD
     },
     GET_SWIPER_NEW_VIDEO(newD, lastD){
-      if(JSON.stringify(this.swiperNewVideo) !== JSON.stringify(newD))
+      if(JSON.stringify(newD) !== JSON.stringify(lastD))
         this.swiperNewVideo = newD
     },
     GET_SWIPER_NEW_VIDEO_OP(newD, lastD){
@@ -302,7 +302,7 @@ export default {
     },
   },
   created() {
-    this.newItems = this.GET_NEW_ITEM.slice(0, 10)
+    this.newItems = (this.GET_NEW_ITEM.length>0?this.GET_NEW_ITEM.slice(0, 10):[])
     this.swiperHead = this.GET_SWIPER_HEAD
     this.swiperHeadOp = this.GET_SWIPER_HEAD_OP
     this.swiperNewItems = this.GET_SWIPER_NEW_ITEM

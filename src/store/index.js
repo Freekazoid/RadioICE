@@ -83,6 +83,7 @@ export default new Vuex.Store({
           if(isEmptyObject(this.state.Admin.request)){//  || this.state.Admin.password === ''
             this.state.Admin.id = from.admin.id
             this.state.Admin.menuAdmin = from.admin.menuAdmin
+            this.state.Admin.social = from.admin.social
             this.state.Admin.password = from.admin.password
             this.state.Admin.passwordReadmin = from.admin.passwordReadmin
             this.state.Admin.showWindow = from.admin.showWindow
@@ -91,7 +92,7 @@ export default new Vuex.Store({
 
           this.state.stream   = from.stream
           this.state.Admin.listStream = (typeof this.state.Admin.listStream === 'undefined'?from.liststream:!this.state.Admin.listStream.some((e, i) => e != from.liststream[i])?this.state.Admin.listStream:from.liststream)                    
-          // console.log('SOCKET_response', this.state.Admin.listStream, from.liststream.length )
+          // console.log('SOCKET_response', from)
         },
         SOCKET_request(state, data) {
           (new Vue()).$socket.emit(data.to, data.data)

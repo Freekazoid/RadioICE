@@ -5,3 +5,4 @@ exports.GET_EMAIL_HREF = require("./emailHref.js");
 exports.GET_EMAIL_HREF_TEXT = require("./emailHrefText.js");
 exports.GET_EMAIL_TEXT = require("./emailText.js");
 exports.GET_START_DATE = require("./startDate.js");
+exports.GET_SOCIAL = require("./social.js");

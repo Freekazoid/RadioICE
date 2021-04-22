@@ -16,3 +16,6 @@ export const SET_EMAIL_TEXT = (state, payload) => {
 export const SET_START_DATE = (state, payload) => {
   state.startDate = payload
 }
+export const SET_SOCIAL = (state, payload) => {
+    state.social = payload
+}

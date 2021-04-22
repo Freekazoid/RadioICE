@@ -21,13 +21,37 @@
       <legend>Подпись подвала:</legend>
       <input type="text" v-model="emailText">
     </fieldset>
+
+    <fieldset class="socialBox">
+      <legend>Соц сети:</legend>
+      <div class="socialLinck" v-for="(item, index) in social" :key="index">
+        <div class="check">
+          показ: <input type="checkbox" v-model="item.active">
+          приложение: <input type="checkbox" v-model="item.app">
+        </div>
+        
+        <div class="boxUpload">
+          <upload :preImgShow="item" @upload="uploadImg" />
+        </div>
+        
+        названи: <input type="text" v-model="item.title">
+        ссылка: <input type="text" v-model="item.linck">
+        описание: <input type="text" v-model="item.description">
+      </div>
+      
+    </fieldset>
   </div>
 </template>
 
 <script>
 import {mapActions, mapGetters, mapMutations} from 'vuex'
+import GetImages from '@/components/getImages.vue'
+import upload from '@/components/upload.vue'
 
 export default {
+  components: {
+    GetImages, upload,
+  },
   data() {
     return {
       copyright: '',
@@ -36,6 +60,7 @@ export default {
       emailHref: '',
       emailText: '',
       startDate: '',
+      social: [],
     }
   },
   computed: {
@@ -46,6 +71,7 @@ export default {
       GET_EMAIL_HREF: 'footer/GET_EMAIL_HREF',
       GET_EMAIL_TEXT: 'footer/GET_EMAIL_TEXT',
       GET_START_DATE: 'footer/GET_START_DATE',
+      GET_SOCIAL: 'footer/GET_SOCIAL',/////////////////////////////
     }),
   },
   methods:{
@@ -53,16 +79,29 @@ export default {
       //loader: 'preLoader/loader',
     }),
     ...mapMutations({
+      SET_FOOTER: 'Admin/SET_FOOTER',
       SET_COPYRIGHT: 'footer/SET_COPYRIGHT',
       SET_DATE: 'footer/SET_DATE',
       SET_EMAIL: 'footer/SET_EMAIL',
       SET_EMAIL_HREF: 'footer/SET_EMAIL_HREF',
       SET_EMAIL_TEXT: 'footer/SET_EMAIL_TEXT',
       SET_START_DATE: 'footer/SET_START_DATE',
-      SET_FOOTER: 'Admin/SET_FOOTER'
+      SET_SOCIAL: 'footer/SET_SOCIAL',////////////////////
     }),
+    uploadImg(data){
+      this.social[data.id] = data
+      // this.SET_SOCIAL(social)
+      this.SET_FOOTER({social: this.social})
+    },
   },
   watch: {
+    social: {
+      handler(newD, lastD) {
+        if(lastD.length > 0)
+          this.SET_FOOTER({social: newD})
+      },
+      deep: true
+    },
     copyright(newD, lastD){
       if(lastD.length > 0)
         this.SET_FOOTER({copyright: newD})
@@ -91,6 +130,7 @@ export default {
     this.emailHref = this.GET_EMAIL_HREF.split('=')[1]
     this.emailText = this.GET_EMAIL_TEXT
     this.startDate = this.GET_START_DATE
+    this.social = this.GET_SOCIAL
   },
 }
 </script>

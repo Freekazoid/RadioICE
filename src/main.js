@@ -26,12 +26,13 @@ import "vue2-perfect-scrollbar/dist/vue2-perfect-scrollbar.css";
 const  PROTOCOL = window.location.protocol,
   PORT = (PROTOCOL === 'http:')? process.env.VUE_APP_SERVER_PORT : process.env.VUE_APP_SERVER_PORT_SSL,
   HOST = process.env.VUE_APP_CLIENT_HOST_NAME,
-  URL = `${PROTOCOL}//${HOST}`// :${PORT}
+  URL = `${PROTOCOL}//${HOST}:${PORT}`// :${PORT}
 
-Vue.config.productionTip =false/////////////////////////////////////////
-Vue.config.devtools = false/////////////////////////////////////////
-Vue.config.debug = false/////////////////////////////////////////
-Vue.config.silent = false/////////////////////////////////////////
+
+Vue.config.productionTip =true/////////////////////////////////////////
+Vue.config.devtools = true/////////////////////////////////////////
+Vue.config.debug = true/////////////////////////////////////////
+Vue.config.silent = true/////////////////////////////////////////
 
 Vue.use(VueAxios, axios)  
 Vue.use(PerfectScrollbar)
@@ -42,7 +43,7 @@ Vue.use(VueLazyload, {
 Vue.use(VueAwesomeSwiper)
 Vue.use(Vuex)
 Vue.use(new VueSocketIO({
-  debug: false,
+  // debug: falses,
   connection: SocketIO(URL),
   vuex: {
     store,
@@ -50,7 +51,7 @@ Vue.use(new VueSocketIO({
     // gettersPrefix: "SOCKET_",
     mutationPrefix: "SOCKET_"
   },
-  transports: ['websocket'],
+  // transports: ['polling', 'websocket'],
   options: { path: "/" }
 }))
 Vue.component('vue-headful', vueHeadful);

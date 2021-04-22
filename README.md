@@ -5,10 +5,35 @@
 ## Server addres
 http://46.161.48.157/
 
+
+### лоинн: djholodok@mail.ru
+### пароль: HeQroGwLuyav	
+
+
+### Подключение ssh
+#### лоин: root
+#### паро: HeQroGwLuyav
+
+### Подключение к MySQL 127.0.0.1:3306
+#### лоин: root
+#### паро: MW4bFVua7EOK
+
+### Подключение к MySQL 46.161.48.157:3306
+#### база: radio-ice
+#### лоин: radio-user
+#### паро: MW4bFVua7EOK
+
+### Подключение к FTP 46.161.48.157:21
+#### лоин: radio-ice
+#### паро: ice777ice
+
+### Подключение к FTP 46.161.48.157:22
+#### лоин: root
+#### паро: MW4bFVua7EOK
+
 ## Project setup
 ```
-npm install
-```
+npm install```
 
 ### Compiles and hot-reloads for development
 ```

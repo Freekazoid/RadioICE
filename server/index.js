@@ -1,14 +1,15 @@
+#!/snap/bin/node node
 const colors = {
-  WHITE: "\033[39m",    //белый
-  RED:'\033[0;31m',     //красный
-  GREEN:'\033[0;32m',   //зелёный
-  YELLOW:'\033[0;33m',  //желтый
-  BLUE:'\033[0;34m',    //синий
-  MAGENTA:'\033[0;35m', //фиолетовый
-  CYAN:'\033[0;36m',    //голубой
-  GRAY:'\033[0;37m',    //серый
+  WHITE: "\033[39m",    /*белый*/
+  RED:'\033[0;31m',     /*красный*/
+  GREEN:'\033[0;32m',   /*зелёный*/
+  YELLOW:'\033[0;33m',  /*желтый*/
+  BLUE:'\033[0;34m',    /*синий*/
+  MAGENTA:'\033[0;35m', /*фиолетовый*/
+  CYAN:'\033[0;36m',    /*голубой*/
+  GRAY:'\033[0;37m',    /*серый*/
 },
-// env = require('dotenv').config().parsed,
+/* env = require('dotenv').config().parsed,*/
 path = require('path'),
 env = require('dotenv').config({ path: path.join(__dirname, '.env') }).parsed,
 SimpleNodeLogger = require('simple-node-logger'),
@@ -16,11 +17,12 @@ log = SimpleNodeLogger.createSimpleLogger( {
   logFilePath:'logfile.log',
   timestampFormat:'YYYY-MM-DD HH:mm:ss.SSS'
 }),
-table = env.DB_TABLE.split(','),// ['admin', 'header', 'footer', 'radio', 'newitem', 'programs', 'icehot', 'team', 'life', 'playlist', 'video']
+table = env.DB_TABLE.split(','),/* ['admin', 'header', 'footer', 'radio', 'newitem', 'programs', 'icehot', 'team', 'life', 'playlist', 'video']*/
 FTPfileJSON = env.FTP_JSON_file,
 app = require('express')(),
 parseJSON = require('json-parse-async'),
 request = require("request"),
+cors = require('cors'),
 upload = require('express-fileupload'),
 cheerio = require("cheerio"),
 youtubeAPI = require('youtube-api-v3-search'),
@@ -35,17 +37,21 @@ serverSSL = require('https').createServer({
     requestCert: false,
     rejectUnauthorized: false,
   }, app),
-io = require('socket.io')(serverSSL, {
+io = require('socket.io')(server, {
   key:  fs.readFileSync(env.SERVER_KEY),
   cert: fs.readFileSync(env.SERVER_CERT),
   ca:   fs.readFileSync(env.SERVER_CA),
   secure: true,
   rejectUnauthorized: false,
-  wsEngine:	env.IO_ENGINE,
-  serveClient: env.IO_SERVER_CLIENT,
-  pingInterval: env.IO_PING_INTERVAL,
-  pingTimeout: env.IO_PING_TIMEOUT,
-  cookie: env.IO_COOKIE,
+  transports:	['polling', 'websocket'],
+  serveClient: true,
+  pingInterval: 25000,
+  pingTimeout: 10000,
+  allowUpgrades: true,
+  origin: "*",
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  preflightContinue: true,
+  optionsSuccessStatus: 204 
 }),
 /*
 saveFile = (str, json=false, fileName=false) => {
@@ -108,7 +114,7 @@ nowDateTime = (...args) => {
         D = new Date(args[0].toUTCString())
         data = args[1]
         str = 'yyyy-MM-dd hh:mm:ss'
-      }else if(args[1] instanceof Date && args[0].match(/(^\+\s|^-\s)/g)){//////
+      }else if(args[1] instanceof Date && args[0].match(/(^\+\s|^-\s)/g)){
         D = new Date(args[1].toUTCString())
         data = args[0]
         str = 'yyyy-MM-dd hh:mm:ss'
@@ -253,7 +259,7 @@ nowDateTime = (...args) => {
   } 
 
   const dateTimeFormat = new Intl.DateTimeFormat('ru-RU', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false}),
-      [{value: month},,{value: day},,{value: year},,{value: hour},,{value: minute},,{value: second}] = dateTimeFormat.formatToParts(D)
+      [{value: day},,{value: month},,{value: year},,{value: hour},,{value: minute},,{value: second}] = dateTimeFormat.formatToParts(D)
   
   if(data && !str || !data && !str)
     return `${year}-${month}-${day} ${hour}:${minute}:${second}`
@@ -267,30 +273,30 @@ nowDateTime = (...args) => {
 getWeekDay = () => ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'][new Date().getDay()],
 add3Weck = () => nowDateTime('+ 21 day', "yyyy-MM-dd hh:mm:ss"),
 searchItunes = async (serch) => {
-  //https://affiliate.itunes.apple.com/resources/documentation/itunes-store-web-service-search-api/
+  /*https://affiliate.itunes.apple.com/resources/documentation/itunes-store-web-service-search-api/*/
   let tunseShow;
   try {
     const serching = serch.toLowerCase().replace(/ +(?= )|radio edit|radio ice remix/gmi, ''),
     response = await itunesAPI(serching, {
-      limit: 1,//Number of results to return [Default: 25]
-      country: "ru",//Two-letter country code [Default: us]
-      entity: "song"//Type of results returned [Default: album]
+      limit: 1,/*Number of results to return [Default: 25]*/
+      country: "ru",/*Two-letter country code [Default: us]*/
+      entity: "song"/*Type of results returned [Default: album]*/
     }).catch((e) => {
       log.log('error', e)
     })
-    tunseShow = response.body.results[0]////////////////////////////  
+    tunseShow = response.body.results[0]
     return (response.body.results.length ? {img: tunseShow.artworkUrl100, track: tunseShow.artistViewUrl} : undefined)
   } catch (error) {
     return undefined
   }
 },
 searchYoutube = async (serch) => {
-  //https://developers.google.com/youtube/v3/docs/search/list
-  // google.com register info data
-  // login: djholodok@mail.ru
-  // passw: Ice525525
-  // apiKey: AIzaSyB_z_C3lycb1OnXmEnA0oTouh53XaAVWE4
-  // secretCode: jgB-y4bl5-fxRU8-eph38UGP
+  /*https:/*developers.google.com/youtube/v3/docs/search/list
+    google.com register info data
+    login: djholodok@mail.ru
+    passw: Ice525525
+    apiKey: AIzaSyB_z_C3lycb1OnXmEnA0oTouh53XaAVWE4
+    secretCode: jgB-y4bl5-fxRU8-eph38UGP*/
   const res = '',
     serching = serch.toLowerCase().replace(/ +(?= )|radio edit|radio ice remix/gmi, ''),
     result = await youtubeAPI('AIzaSyB_z_C3lycb1OnXmEnA0oTouh53XaAVWE4',{
@@ -299,12 +305,12 @@ searchYoutube = async (serch) => {
       type: 'video, musick',
       part: 'id, snippet',
       maxResults: 1,
-      userIp: "109.168.145.32",//If end quote. you nid ip adres you server
+      userIp: "109.168.145.32",/*If end quote. you nid ip adres you server*/
       "video-duration": 'short',
       "video-license": 'creativeCommon'
     })
     try {
-      return (!result.hasOwnProperty('error')? 'https://www.youtube.com/embed/'+result.items[0].id.videoId: undefined)
+      return (!result.hasOwnProperty('error')? 'https:/*www.youtube.com/embed/'+result.items[0].id.videoId: undefined)
     } catch (e) {
       log.log('error',e)
     }      
@@ -332,6 +338,7 @@ liveListner = () => {
         allListnerArr.forEach(item => {
           listner+=item
         })
+
         if (listnerState !== listner){
           tableDB.stream.streamLive.listner = listner
           usersRespons(tableDB, 'response')
@@ -361,7 +368,7 @@ addTextWeckRating = (id=false) => {
     return 'newitem'
 },
 JSONtime = (id=false) => {
-  let time = nowDateTime(), //new Date().getTime(),
+  let time = nowDateTime(),
     index = 0,
     obj = filterByID(tableDB.liststream, id)
   if(typeof obj !== 'undefined')
@@ -374,26 +381,27 @@ JSONtime = (id=false) => {
   return {0: time}
 },
 fromJSONtoLIVE = async () => {
-  await DBselect(['liststream'])// Select data table
+  await DBselect(['liststream'])/* Select data table*/
   const nawDate = nowDateTime()
   tableDB.stream = ((typeof tableDB.stream !== 'object')? {} : tableDB.stream)
   
   dataJson = (err=false, json=false) => {
     if (err) {
-      log.log('error','Error parseJSON:', nawDate, err)
+      log.log('error',colors.RED+'Error parseJSON: '+ nawDate +' '+ err+ colors.WHITE)
       return false
     }
-
+    
     if(typeof json === 'object' && json.hasOwnProperty("ELEM_LIST")){
       let oneCall = true,
         JSONFile = (typeof json.ELEM_LIST.ELEM[1] === 'undefined' ? json.ELEM_LIST.ELEM :json.ELEM_LIST.ELEM[0])
       JSONFile.LISTNER = json.ELEM_LIST.LISTNER
 
       if(typeof tableDB.liststream === 'object'){
+        /* console.log( Array.from(tableDB.liststream) )*/
         if (Array.from(tableDB.liststream)){
           NewItemLive(JSONFile)
-          log.log('info',colors.GREEN+'new item live'+colors.BLUE+ nawDate+ colors.WHITE+'name: '+JSONFile.NAME+' artist: '+JSONFile.ARTIST)
-          // saveFile('new item: '+nawDate+'\r\n      name: '+JSONFile.NAME+' artist: '+JSONFile.ARTIST+"\r\n")
+          log.log('info',colors.GREEN+'new item live '+colors.BLUE+ nawDate+ colors.WHITE+' name: '+JSONFile.NAME+' artist: '+JSONFile.ARTIST)
+          /* saveFile('new item: '+nawDate+'\r\n      name: '+JSONFile.NAME+' artist: '+JSONFile.ARTIST+"\r\n")*/
         } else {
           tableDB.liststream.forEach((item, key) => {
             if (JSONFile.NAME === item.name && JSONFile.ARTIST === item.artist) {
@@ -415,14 +423,15 @@ fromJSONtoLIVE = async () => {
               
               oneCall = false
               log.log('info',colors.RED+'repite live '+colors.BLUE + nawDate +' '+ colors.WHITE+'id: '+item.id+' name: '+JSONFile.NAME+' === '+item.name+' artist: '+JSONFile.ARTIST+' === '+item.artist)
-              // saveFile('repite live: '+nawDate+'\r\n      id: '+item.id+' name: '+JSONFile.NAME+' === '+item.name+' artist: '+JSONFile.ARTIST+' === '+item.artist+"\r\n")
+              /* saveFile('repite live: '+nawDate+'\r\n      id: '+item.id+' name: '+JSONFile.NAME+' === '+item.name+' artist: '+JSONFile.ARTIST+' === '+item.artist+"\r\n")*/
+              console.log(tableDB)
               usersRespons(tableDB, 'response')
-              DBupdate({liststream: {id: item.id, updatePluse: true, broadcasting: 1}})// Update table lesson from broadcasting 
-              DBupdate({liststream: {id: item.id, timerating: timerating, time_live: timeLive, start_time: nowDateTime(), end_time: add3Weck()}})// Update table lesson from timerating
+              DBupdate({liststream: {id: item.id, updatePluse: true, broadcasting: 1}})/* Update table lesson from broadcasting */
+              DBupdate({liststream: {id: item.id, timerating: timerating, time_live: timeLive, start_time: nowDateTime(), end_time: add3Weck()}})/* Update table lesson from timerating*/
             } else if (key === tableDB.liststream.length-1 && oneCall){
               NewItemLive(JSONFile)
               log.log('info',colors.GREEN+'new item live'+colors.BLUE+ nawDate+ colors.WHITE+'name: '+JSONFile.NAME+' artist: '+JSONFile.ARTIST)
-              // saveFile('new item: '+nawDate+'\r\n      name: '+JSONFile.NAME+' artist: '+JSONFile.ARTIST+"\r\n")
+              /* saveFile('new item: '+nawDate+'\r\n      name: '+JSONFile.NAME+' artist: '+JSONFile.ARTIST+"\r\n")*/
             }
           })
         }
@@ -433,7 +442,7 @@ fromJSONtoLIVE = async () => {
   
   fs.readFile(FTPfileJSON, {encoding : 'utf-8'}, async (err, data) => {
     if (err) throw err
-    
+    /* console.log( typeof data )*/
     if(data !== saveLastJSON){
       log.log('info',colors.YELLOW+'call from JSON file '+colors.WHITE+nowDateTime())
       parseJSON(data, dataJson)
@@ -441,6 +450,7 @@ fromJSONtoLIVE = async () => {
       fromJSONtoLIVE()
     }
   })
+
  await playList()
  await videoList()
 },
@@ -448,15 +458,15 @@ NewItemLive = async (JSONFile) => {
   if(JSONFile.BLK_TYPE === "М"){
     const itunse = await searchItunes(`${JSONFile.ARTIST} ${JSONFile.NAME}`),
       youTube = await searchYoutube(`${JSONFile.ARTIST} ${JSONFile.NAME}`),
-      videoLinck = (typeof youTube === 'undefined'?'https://youtube.com/watch?v=':youTube),
+      videoLinck = (typeof youTube === 'undefined'?'https:/*youtube.com/watch?v=':youTube),
       images = (typeof itunse !== 'undefined'? itunse.img : 'iceRadioLogo.svg'),
-      img = (JSONFile.BLK_TYPE !== 'П'? images: 'program.png'),//image program
+      img = (JSONFile.BLK_TYPE !== 'П'? images: 'program.png'),/*image program*/
       track = (typeof itunse !== 'undefined'? itunse.track : ''),
       timerating = addTextWeckRating(),
       timeLive = JSONtime(),
       live = {
         start_time: nowDateTime(),
-        end_time: add3Weck(), // +3 недели
+        end_time: add3Weck(), /* +3 недели*/
         name: JSONFile.NAME,
         artist: JSONFile.ARTIST,
         duration: JSONFile.DURATION,
@@ -477,7 +487,7 @@ ratingMeasurement = async (startList) => {
   setTimeout(() => {
     
     let start = parseInt(startList),
-      end = parseInt(tableDB.stream.streamLive.listner),//////////
+      end = parseInt(tableDB.stream.streamLive.listner),
       id = tableDB.stream.streamLive.id
 
     if( start > end ){
@@ -485,8 +495,7 @@ ratingMeasurement = async (startList) => {
     }else if( start < end ){
       DBupdate({liststream: {id: id, updatePluse: true, rating: (end - start)}})
     }
-    ///////////////////////////////////////////
-    // saveFile(`{"time": ${env.TIME_RATING},"date":"${nowDateTime()}","img":"${tableDB.stream.streamLive.img}","id":"${id}", "name": "${tableDB.stream.streamLive.name}", "artist": "${tableDB.stream.streamLive.artist}", "start": ${start}, "end": ${end}, "sum": ${(end - start)}}`, true)
+    /* saveFile(`{"time": ${env.TIME_RATING},"date":"${nowDateTime()}","img":"${tableDB.stream.streamLive.img}","id":"${id}", "name": "${tableDB.stream.streamLive.name}", "artist": "${tableDB.stream.streamLive.artist}", "start": ${start}, "end": ${end}, "sum": ${(end - start)}}`, true)*/
     log.log('info',colors.BLUE+'startRating: '+colors.WHITE+'id: '+id+'\r\n                     Start: '+colors.CYAN+start+colors.WHITE+' start > end '+colors.GREEN+(start>end)+colors.WHITE+' '+colors.YELLOW+String(-(start - end))+colors.WHITE+'\r\n                     End: '+colors.CYAN+end+colors.WHITE+' start < end '+colors.GREEN+(start<end)+colors.WHITE+' '+colors.YELLOW+String(end - start)+colors.WHITE)
   }, env.TIME_RATING*1000)
 }, 
@@ -533,42 +542,49 @@ DBupdate = async (data) => {
       dat[key.toLowerCase()] = data[key]
     }
     for(let t in table) {
-      const rows = Object.keys(data[table[t]])        
+      const rows = Object.keys(data[table[t]])
+      // console.log(colors.GREEN+'comin data upload to table'+colors.WHITE,  table[t], rows, dat )
       for(r in rows) {
         table[t] = table[t].toLowerCase()
-        
-        if(table.filter(item => ['admin','header','footer','radio','newitem','programs','icehot','team','life','playlist','video'].includes(item)).length > 0) {
-          const value = (typeof dat[table[t]][rows[r]] === 'object'? (dat[table[t]][rows[r]].reduce((a, c, i) => { a[i] = c; return a; }, {})) : dat[table[t]][rows[r]]),
-            valueToString = (typeof dat[table[t]][rows[r]] === 'object'? JSON.stringify(value) : value),
-            [row, fields] = await connect.execute(`UPDATE ${env.DB_PREFIX}${table[t]} SET ${rows[r]}=?`, [valueToString])
+        try {
+          if(!['swiperHeadOp'].includes(rows[r]) && table.filter(item => ['admin','header','footer','radio','newitem','programs','icehot','team','life','playlist','video'].includes(item)).length > 0) {
+            const value = (typeof dat[table[t]][rows[r]] === 'object'? (dat[table[t]][rows[r]].reduce((a, c, i) => { a[i] = c; return a; }, {})) : dat[table[t]][rows[r]]),
+              valueToString = (typeof dat[table[t]][rows[r]] === 'object'? JSON.stringify(value) : value)
+              [row, fields] = await connect.execute(`UPDATE ${env.DB_PREFIX}${table[t]} SET ${rows[r]}=?`, [valueToString])
 
-          log.log('info','0 db UPDATE: '+(typeof fields === 'undefined'? `${colors.GREEN}TRUE${colors.WHITE}` : `${colors.RED}FALSE${colors.WHITE}`) )
-        } else {    
-          if(dat[table[t]][0] === 'update' && !['updatePluse', 'id'].includes(rows[r])){
-            const key = parseInt(rows[r])
-            if(key === 1){
-              const id = dat[table[t]][key].id,
-                setVall = (typeof dat[table[t]][key] === 'object'? Object.entries(dat[table[t]][key]).map((a) => a[0]==='time_live'?(`${a[0]}='${JSON.stringify(a[1])}'`):a[0]!=='id'?(`${a[0]}='${a[1]}'`):null ).filter(e => e).toString():false),
-                [row, fields] = await connect.execute(`UPDATE ${env.DB_PREFIX}${table[t].toLowerCase()} SET ${setVall} WHERE id=${id}`)
+            log.log('info','0 db UPDATE: '+(typeof fields === 'undefined'? `${colors.GREEN}TRUE${colors.WHITE}` : `${colors.RED}FALSE${colors.WHITE}`) )
+          } else if(['swiperHeadOp'].includes(rows[r])){
 
-              log.log('info','1 db UPDATE: '+table[0]+' '+(typeof fields === 'undefined'? `${colors.GREEN}TRUE${colors.WHITE}` : `${colors.RED}FALSE${colors.WHITE}`) )
-            }
-          } else if((dat[table[t]].hasOwnProperty('updatePluse') && dat[table[t]]['updatePluse'] ) && !['updatePluse','id','listSteam'].includes(rows[r])){
-            const id = data[table[t]].id,
-              value = (typeof data[table[t]][rows[r]] === 'object'? (data[table[t]][rows[r]].reduce((a, c, i) => { a[i] = c; return a; }, {})) : data[table[t]][rows[r]]),
-              valueToString = (typeof data[table[t]][rows[r]] === 'object'? JSON.stringify(value) : value),
-              [row, fields] = await connect.execute(`UPDATE ${env.DB_PREFIX}${table[t]} SET ${rows[r]}=${rows[r]}+${valueToString} WHERE id=${id}`)
-            
-            log.log('info','2 db UPDATE: '+table[0]+' '+((typeof fields === 'undefined' && row)? `${colors.GREEN}TRUE${colors.WHITE}` : `${colors.RED}FALSE${colors.WHITE}`) )
-          } else if(!data[table[t]].hasOwnProperty('updatePluse') && !['updatePluse','id','listSteam','0'].includes(rows[r] )){
-            const id = data[table[t]].id,
-              setVall = (typeof data[table[t]][rows[r]] === 'object'?`${rows[r]}='${JSON.stringify(data[table[t]][rows[r]])}'` : `${rows[r]}='${data[table[t]][rows[r]]}'`),
-              [row, fields] = await connect.execute(`UPDATE ${env.DB_PREFIX}${table[t]} SET ${setVall} WHERE id=${id}`)
+            console.log(colors.GREEN+'comin data upload to table'+colors.WHITE,table[t],  dat[table[t]][rows[r]].reduce((a, c, i) => { a[i] = c; return a; }, {}) )
 
-            log.log('info','3 db UPDATE: '+table[0]+' '+(typeof fields === 'undefined'? `${colors.GREEN}TRUE${colors.WHITE}` : `${colors.RED}FALSE${colors.WHITE}`) )
-          } 
+          } else {
+            if(dat[table[t]][0] === 'update' && !['updatePluse', 'id'].includes(rows[r])){
+              const key = parseInt(rows[r])
+              if(key === 1){
+                const id = dat[table[t]][key].id,
+                  setVall = (typeof dat[table[t]][key] === 'object'? Object.entries(dat[table[t]][key]).map((a) => a[0]==='time_live'?(`${a[0]}='${JSON.stringify(a[1])}'`):a[0]!=='id'?(`${a[0]}='${a[1]}'`):null ).filter(e => e).toString():false),
+                  [row, fields] = await connect.execute(`UPDATE ${env.DB_PREFIX}${table[t].toLowerCase()} SET ${setVall} WHERE id=${id}`)
+
+                log.log('info','1 db UPDATE: '+table[0]+' '+(typeof fields === 'undefined'? `${colors.GREEN}TRUE${colors.WHITE}` : `${colors.RED}FALSE${colors.WHITE}`) )
+              }
+            } else if((dat[table[t]].hasOwnProperty('updatePluse') && dat[table[t]]['updatePluse'] ) && !['updatePluse','id','listSteam'].includes(rows[r])){
+              const id = data[table[t]].id,
+                value = (typeof data[table[t]][rows[r]] === 'object'? (data[table[t]][rows[r]].reduce((a, c, i) => { a[i] = c; return a; }, {})) : data[table[t]][rows[r]]),
+                valueToString = (typeof data[table[t]][rows[r]] === 'object'? JSON.stringify(value) : value),
+                [row, fields] = await connect.execute(`UPDATE ${env.DB_PREFIX}${table[t]} SET ${rows[r]}=${rows[r]}+${valueToString} WHERE id=${id}`)
+              
+              log.log('info','2 db UPDATE: '+table[0]+' '+((typeof fields === 'undefined' && row)? `${colors.GREEN}TRUE${colors.WHITE}` : `${colors.RED}FALSE${colors.WHITE}`) )
+            } else if(!data[table[t]].hasOwnProperty('updatePluse') && !['updatePluse','id','listSteam','0'].includes(rows[r] )){
+              const id = data[table[t]].id,
+                setVall = (typeof data[table[t]][rows[r]] === 'object'?`${rows[r]}='${JSON.stringify(data[table[t]][rows[r]])}'` : `${rows[r]}='${data[table[t]][rows[r]]}'`),
+                [row, fields] = await connect.execute(`UPDATE ${env.DB_PREFIX}${table[t]} SET ${setVall} WHERE id=${id}`)
+
+              log.log('info','3 db UPDATE: '+table[0]+' '+(typeof fields === 'undefined'? `${colors.GREEN}TRUE${colors.WHITE}` : `${colors.RED}FALSE${colors.WHITE}`) )
+            } 
+          }
+        } catch (e) {
+          log.log('warn', colors.RED+'not UPDATE db'+colors.WHITE+"\r\n"+table[t]+" / "+rows.join(', ')+" => "+JSON.stringify(dat[table[t]][rows[r]])+"\r\n"+e)
         }
-
       }
     }
   connect.end()
@@ -629,7 +645,7 @@ DBinsert = async (data) => {
         valueToArray.push(data[table[t]][rows[r]])
       }
     }
-    // console.log(  `INSERT INTO ${env.DB_PREFIX}${table[t]} (${value}) VALUES(${questyon})`,  valueToArray )
+    /* console.log(  `INSERT INTO ${env.DB_PREFIX}${table[t]} (${value}) VALUES(${questyon})`,  valueToArray )*/
     const [row, fields] = await connect.execute(`INSERT INTO ${env.DB_PREFIX}${table[t].toLowerCase()} (${value}) VALUES(${questyon})`,  valueToArray)
   }
   log.log('info','db insert: '+table[0]+' '+(typeof fields === 'undefined'? `${colors.GREEN}TRUE${colors.WHITE}` : `${colors.RED}FALSE${colors.WHITE}`) )
@@ -679,7 +695,7 @@ playList = () => {
       return result
     }, {})
 
-    DBupdate({playlist: {playList: tmp}})// Update table lesson from timerating
+    DBupdate({playlist: {playList: tmp}})/* Update table lesson from timerating*/
     DBselect(table)
     setTimeout( () => usersRespons(tableDB, 'response'), 5000)      
     log.log('info',"DBupdate - playlist")
@@ -693,9 +709,9 @@ NewItem = () => {
     tableDB.liststream.forEach(item => {
       const nawDate = new Date().getTime(),
         daysLag = Math.ceil(Math.abs(nawDate - item.start_time.getTime()) / (1000 * 3600 * 24))
-        console.log( 'TEST',  daysLag )
+        /* console.log( 'TEST',  daysLag )*/
         if(item.timerating === 'newitem' && daysLag <= 7){
-        // console.log( item.start_time, item.id, item.name, item.artist )////
+        /* console.log( item.start_time, item.id, item.name, item.artist )*/
         tmp.push({
           id:  item.id,
           img: ImageEdit(item.img),
@@ -726,7 +742,7 @@ NewItem = () => {
             delimiters: "&mdash;",
             timeRating: tmps.timerating,
             trackLinck: tmps.trackLinck,
-            youTubeLinck: tmps.videoLinck,///////////////////////
+            youTubeLinck: tmps.videoLinck,
             play: false,
             hover: false,
             active: false
@@ -742,8 +758,8 @@ NewItem = () => {
         return result
       }, {})
 
-      DBupdate({radio: {swiperNewItems: randomTmp}})// Update table lesson from timerating
-      DBupdate({newitem: {newItems: tmp}})// Update table lesson from timerating
+      DBupdate({radio: {swiperNewItems: randomTmp}})/* Update table lesson from timerating*/
+      DBupdate({newitem: {newItems: tmp}})/* Update table lesson from timerating*/
       DBselect(table)
       setTimeout( () => usersRespons(tableDB, 'response'), 5000)      
       log.log('info',"DBupdate - newitem")
@@ -792,8 +808,8 @@ videoList = () => {
         return result
       }, {})
 
-      DBupdate({radio: {swiperNewVideo: randomTmp}})// Update table lesson
-      DBupdate({video: {listVideo: tmp}})// Update table lesson
+      DBupdate({radio: {swiperNewVideo: randomTmp}})/* Update table lesson*/
+      DBupdate({video: {listVideo: tmp}})/* Update table lesson*/
       DBselect(table)
       setTimeout( () => usersRespons(tableDB, 'response'), 5000)      
       log.log('info',"DBupdate - videoList")
@@ -810,7 +826,7 @@ iceHost30List = () => {
 
     if(getWeekDay() === env.START_30_ICEHOT && Array.from(tableDB.liststream)){
       tableDB.liststream.forEach(item => {
-        if(typeof date === 'undefined'){//////////////////////////////////////////
+        if(typeof date === 'undefined'){
           if( new Date(dateNow) >=  new Date(nowDateTime(item.start_time.toLocaleString())) && new Date(dateNow) <=  new Date(nowDateTime(item.end_time.toLocaleString())) )
           IceHot.push(item)
         } else if(new Date(date.stop) !== new Date(nowDateTime("yyyy-MM-dd"))){
@@ -823,7 +839,7 @@ iceHost30List = () => {
         tmps = arrayRandElement(IceHot)
         if(tmps)
           if(filterByID(randomTmp, tmps.id) === undefined){
-            console.log('TEST', tmps)
+            /* console.log('TEST', tmps)*/
             randomTmp.push({
               id:  tmps.id,
               img: ImageEdit(tmps.img),
@@ -833,7 +849,7 @@ iceHost30List = () => {
               delimiters: "&mdash;",
               timeRating: tmps.timerating,
               trackLinck: tmps.trackLinck,
-              youTubeLinck: tmps.videoLinck,///////////////////////
+              youTubeLinck: tmps.videoLinck,
               play: false,
               hover: false,
               active: false
@@ -848,7 +864,7 @@ iceHost30List = () => {
       IceHots.push({stop: nowDateTime()})
 
       DBupdate({radio: {newItems: randomTmp}})
-      DBupdate({icehot: {newItems: IceHots}})// Update table lesson
+      DBupdate({icehot: {newItems: IceHots}})/* Update table lesson*/
       DBselect(table) 
       log.log('info',"DBupdate - iceHost30List")
     }
@@ -875,21 +891,22 @@ timerId = setTimeout( iceHost30 = () => {
 }, 3000)
 
 
+
 app.use((req, res, next) => {
-res.setHeader('Access-Control-Allow-Origin', '*')
-res.setHeader('Access-Control-Allow-Methods', 'GET, POST')
-res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type')
-res.setHeader('Access-Control-Allow-Credentials', true)
-next()
+  res.setHeader('Access-Control-Allow-Origin', '*')
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST')
+  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type')
+  res.setHeader('Access-Control-Allow-Credentials', true)
+  next()
 })
 app.use(upload())
 
 app.post('/', (req, res) => {
-res.json({
-  id: Object.keys(io.sockets.clients().connected),
-  ip: usersIp,
-  count: Array.from(Object.keys(io.sockets.clients().connected)).length
-})
+  res.json({
+    id: Object.keys(io.sockets.clients().connected),
+    ip: usersIp,
+    count: Array.from(Object.keys(io.sockets.clients().connected)).length
+  })
 })
 app.post('/upload', (req,res) => {
 if(req.files.file){
@@ -897,7 +914,7 @@ if(req.files.file){
     name = file.name,
     type = file.mimetype,
     uploadpath = env.UPLOAD_DIR + name
-  // console.log('file',file )
+  /* console.log('file',file )*/
   file.mv(uploadpath, err => {
     if(err){
       log.log('info',"File Upload Failed", name, err)
@@ -905,10 +922,10 @@ if(req.files.file){
     } else {
       let newPath = env.UPLOAD_MP3
       fs.readdir(newPath, (err, files) => {
-        // let newName = String(files.length+1)
-        // newName = (newName.length===8?newName:'0'.repeat(8-newName.length)+newName)
-        // newPath = newPath+newName+'.mp3'
-        newPath = newPath+name////////////////////
+        /* let newName = String(files.length+1)
+         newName = (newName.length===8?newName:'0'.repeat(8-newName.length)+newName)
+        /* newPath = newPath+newName+'.mp3'*/
+        newPath = newPath+name
       
         fs.rename(uploadpath, newPath, function (err) {
           if (err) throw err
@@ -924,27 +941,29 @@ if(req.files.file){
 }
 })
 app.get('/', (req, res) => {
-// res.sendFile(__dirname+'/dist/index.html');
-res.json({
-  id: Object.keys(io.sockets.clients().connected),
-  ip: usersIp,
-  count: Array.from(Object.keys(io.sockets.clients().connected)).length
+/* res.sendFile(__dirname+'/dist/index.html');*/
+  res.json({
+    id: Object.keys(io.sockets.clients().connected),
+    ip: usersIp,
+    count: Array.from(Object.keys(io.sockets.clients().connected)).length
 })
 })
 app.get('/upload', (req, res) => {
-res.send("load file");
-res.end();
+  res.send("load file");
+  res.end();
 })
 
 
 
-try {//следим за изменениями в эфире вещания JSON to ftp папке
+try {/*следим за изменениями в эфире вещания JSON to ftp папке*/
 fs.watchFile(FTPfileJSON, (curr, prev) => (curr.mtime.getTime() !== prev.mtime.getTime()? fromJSONtoLIVE() : null))
 } catch (error) {log.log('error','not read json file')}
 
 
 server.listen(env.SERVER_PORT, env.SERVER_HOST, () => log.log('info',`${colors.YELLOW}Server start:\n http://${env.SERVER_HOST}:${env.SERVER_PORT}${colors.WHITE}`))
 serverSSL.listen(env.SERVER_PORT_SSL, env.SERVER_HOST, () => log.log('info',`${colors.YELLOW}Server start:\n https://${env.SERVER_HOST}:${env.SERVER_PORT_SSL}${colors.WHITE} \n`))
+
+app.options('*', cors())
 
 io.attach(server)
 io.attach(serverSSL)
@@ -962,7 +981,7 @@ socket.on('disconnect', () => {
 
 
 socket.on('config', data => { 
-  // log.log('info',`${colors.RED}config request${colors.WHITE}`, data)
+  /* log.log('info',`${colors.RED}config request${colors.WHITE}`, data)*/
   if(data.hasOwnProperty('listStream') && !data.listStream.indexOf('delete'))
     DBdelete(data)
   else if(data.hasOwnProperty('listStream') && !data.listStream.indexOf('update'))
@@ -977,5 +996,5 @@ socket.on('config', data => {
 })
 
 
-DBselect(table)//load db table
-fromJSONtoLIVE()//load from to start server
+DBselect(table)/*load db table*/
+fromJSONtoLIVE()/*load from to start server*/

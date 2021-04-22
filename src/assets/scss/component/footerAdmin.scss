@@ -19,4 +19,42 @@
         width: 97%;
       }
     }
+    .socialBox {
+      border: 1.5px solid #CCA383;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-flow: row wrap;
+
+      .socialLinck{
+        width: 200px;
+        height: 220px;
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: space-around;
+        flex-direction: column;
+        align-items: stretch;
+        border-top: 1px solid;
+        border-bottom: 1px solid;
+        border-radius: 10px;
+        margin-bottom: 10px;
+        padding: 5px 10px;
+
+        .boxUpload{
+          height: 50px;
+          border: .5px dotted;
+          .contentBox{
+            min-width: 50px;
+            max-width: fit-content;
+            display: contents;
+          }
+        }
+        
+        input{
+          border: .5px solid;
+          padding: 2px 10px;
+        }
+      }
+    }
   }

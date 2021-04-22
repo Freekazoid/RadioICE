@@ -10,3 +10,4 @@ exports.SET_VIDEO = require("./video.js");
 exports.SET_REQEST = require("./request.js");
 exports.SET_SHOW_WINDOW = require("./showWindow.js");
 exports.SET_LIST_STREAM = require("./listStream.js");
+exports.SET_RADIO_SLIDER = require("./radio.js");

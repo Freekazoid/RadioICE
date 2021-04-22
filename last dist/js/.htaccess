@@ -1,0 +1,44 @@
+# Перенаправляем все запросы на index.php
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+		#RewriteCond %{HTTPS} !=on
+		#RewriteRule ^/?(.*) https://%{SERVER_NAME}/$1 [R,L]
+    RewriteBase /
+		Options All -Indexes
+		
+		RewriteCond %{REQUEST_URI} !^/css\/.*$
+		RewriteCond %{REQUEST_URI} !^/js\/.*$
+		
+    RewriteCond %{REQUEST_FILENAME} !-s
+    RewriteCond %{REQUEST_FILENAME} !-l
+    RewriteCond %{REQUEST_FILENAME} !-d
+	
+    RewriteRule ^(.*)$ index.html [NC,L]
+</IfModule>
+
+ # Устанавливает по умолчанию временную зону
+	# php_value date.timezone "Europe/Moscow"
+
+# Используйте кодировку UTF-8 для обработки text/plain или text/html
+AddDefaultCharset utf-8
+
+# Принудительное использование UTF-8 для различных файлов
+AddCharset utf-8 .php .css .js .json .html .htm .xml .txt
+
+# Сжимаем все даные для ускорения
+<IfModule mod_gzip.c>
+	mod_gzip_on Yes
+	mod_gzip_dechunk Yes
+	mod_gzip_item_include file \.(html?|txt|css|js|php|pl)$ 
+	mod_gzip_item_include handler ^cgi-script$
+	mod_gzip_item_include mime ^text\.*
+	mod_gzip_item_include mime ^application/x-javascript.*
+	mod_gzip_item_exclude mime ^img\.*
+	mod_gzip_item_exclude rspheader ^Content-Encoding:.*gzip.* 
+</IfModule>
+
+# Закрываем доступ к определенным типам файлов
+<FilesMatch ".(htaccess|htpasswd|ini|php|phps|fla|psd|log|sh)$">
+ Order Allow,Deny
+ Deny from all
+</FilesMatch>

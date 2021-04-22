@@ -8,6 +8,7 @@ const state = {
     emailHrefText: "",
     emailText: "",
     startDate: "",
+    social: [],
 }
 
 export const footer = {
